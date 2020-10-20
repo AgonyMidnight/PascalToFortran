@@ -63,9 +63,9 @@ namespace TyAP.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap buttom1 {
+        internal static System.Drawing.Bitmap button1 {
             get {
-                object obj = ResourceManager.GetObject("buttom1", resourceCulture);
+                object obj = ResourceManager.GetObject("button1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

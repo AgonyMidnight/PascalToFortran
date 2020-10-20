@@ -21,14 +21,8 @@
         <Label Content="Введите необходимый код на Pascal " HorizontalAlignment="Left" Margin="19,10,0,0" VerticalAlignment="Top" Height="26" Width="213"/>
         <Button Content="" HorizontalAlignment="Left" Margin="248,182,0,0" VerticalAlignment="Top" Width="63" Height="54">
             <Button.Background>
-                <ImageBrush ImageSource="buttom1.jpg" TileMode="Tile"/>
+                <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/button1.png" TileMode="Tile"/>
             </Button.Background>
-            <Button.Foreground>
-                <ImageBrush ImageSource="buttom1.jpg"/>
-            </Button.Foreground>
-            <Button.OpacityMask>
-                <ImageBrush ImageSource="buttom1.jpg"/>
-            </Button.OpacityMask>
         </Button>
         <TextBox HorizontalAlignment="Left" Height="310" Margin="338,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="213"/>
         <Label Content="Перевод в токены" HorizontalAlignment="Left" Margin="338,10,0,0" VerticalAlignment="Top" Height="26" Width="111"/>

@@ -96,10 +96,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="buttom1.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ImgButtom.jpg" />
+    <Content Include="Resources\button1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
