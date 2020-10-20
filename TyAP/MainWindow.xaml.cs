@@ -39,7 +39,7 @@ namespace TyAP
             while (temp != null)
             {
                 temp = table.ReadLine();
-                string[] value = temp.Split(' ');
+                string[] value = temp.Split('\t');
                 for (int i = 0; i < m2; i++)
                 {
                     Matrix[str, i] = value[i];
