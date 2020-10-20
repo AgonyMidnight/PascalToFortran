@@ -69,5 +69,98 @@ namespace TyAP.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на program W00
+        ///PROGRAM W00
+        ///begin W01
+        ///end W02
+        ///if W03
+        ///else W04
+        ///then W05
+        ///var W06
+        ///of W07 
+        ///procedure W08
+        ///function W09
+        ///goto W10
+        ///GOTO W10
+        ///and W11
+        ///AND W11
+        ///OR W12
+        ///or W12
+        ///not W13
+        ///NOT W13
+        ///integer W14
+        ///real W15
+        ///string W16
+        ///char W17
+        ///array W18
+        ///
+        ///
+        ///
+        ///
+        ///:= O00
+        ///+ O01
+        ///- O02
+        ///* O03
+        //// O04
+        ///&gt; O06
+        ///&lt; O07
+        ///= O08
+        ///&gt;= O09
+        ///&gt;= O10
+        ///&lt;&gt; O11
+        ///+= O12
+        ///-= O13
+        ///*= O14
+        ////= O15
+        ///^ O16
+        ///
+        ///
+        ///
+        ///
+        ///
+        ///&lt; R01
+        ///&gt; R02
+        ///, R03
+        ///. R04
+        ///: R05
+        ///; R06
+        ///[ R07
+        ///] R08
+        ///{ R09
+        ///_ R10
+        ///.. R11
+        ///&quot; R12
+        ///&apos; R13
+        ///} R14
+        ///( R15
+        ///) R16
+        ///
+        ///
+        ///integer  [остаток строки не уместился]&quot;;.
+        /// </summary>
+        internal static string encoding {
+            get {
+                return ResourceManager.GetString("encoding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на 1	3	4	12	13	7	7	1	9,P6	16	11	11	11	14	7
+        ///1	2	15,P2	12,P2	13,P2	7,P2	7,P2	1	F	16,P2	11,P2	0,P2	0,P2	14,P2	7,P2
+        ///2	2	15,P2	12,P2	13,P2	7,P2	7,P2	2	F	16,P2	11,P2	0,P2	0,P2	14,P2	7,P2
+        ///F	3	4	12,P3	13,P3	7,P3	7,P3	17	F	16,P3	11,P3	0,P3	F	14,P3	7,P3
+        ///F	4	15,P3	12,P3	13,P3	7,P3	7,P3	18	F	16,P3	11,P3	0,P3	F	14,P3	7,P3
+        ///F	5	6	12,P3	13,P3	7,P3	7,P3	F	F	16,P3	11,P3	0,P3	F	14,P3	7,P3
+        ///F	6	F	12,P3	13,P3	7,P3	7,P3	F	F	16,P3	11,P3	0,P3	F	14,P3	7,P3
+        ///1,P5	3,P5	4,P5	F	F	7,P5	8,P6	1,P5	9,P5	F	11,P5	F	F	F	7,P5
+        ///1,P5	3,P5	4,P5 [остаток строки не уместился]&quot;;.
+        /// </summary>
+        internal static string table {
+            get {
+                return ResourceManager.GetString("table", resourceCulture);
+            }
+        }
     }
 }

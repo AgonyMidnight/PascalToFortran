@@ -24,7 +24,7 @@
                 <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/button1.png" TileMode="Tile"/>
             </Button.Background>
         </Button>
-        <TextBox HorizontalAlignment="Left" Height="310" Margin="338,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="213"/>
+        <TextBox x:Name="textBoxOutToken" HorizontalAlignment="Left" Height="310" Margin="338,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="213"/>
         <Label Content="Перевод в токены" HorizontalAlignment="Left" Margin="338,10,0,0" VerticalAlignment="Top" Height="26" Width="111"/>
         <TextBox HorizontalAlignment="Left" Height="310" Margin="577,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110"/>
         <TextBox HorizontalAlignment="Left" Height="310" Margin="692,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110"/>

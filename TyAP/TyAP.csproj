@@ -96,6 +96,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\table.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\encoding.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="bin\encoding.txt" />
+    <None Include="bin\table.txt" />
     <Content Include="Resources\button1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
