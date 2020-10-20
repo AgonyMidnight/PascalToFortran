@@ -18,7 +18,7 @@
             </LinearGradientBrush>
         </Grid.Background>
         <TextBox HorizontalAlignment="Left" Height="310" Margin="19,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="213"/>
-        <Label Content="Введите необходимый код на Pascal " HorizontalAlignment="Left" Margin="19,10,0,0" VerticalAlignment="Top" Height="26" Width="213"/>
+        <Label x:Name="label1" Content="Введите необходимый код на Pascal " HorizontalAlignment="Left" Margin="19,10,0,0" VerticalAlignment="Top" Height="26" Width="213"/>
         <Button Content="" HorizontalAlignment="Left" Margin="248,182,0,0" VerticalAlignment="Top" Width="63" Height="54">
             <Button.Background>
                 <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/button1.png" TileMode="Tile"/>
