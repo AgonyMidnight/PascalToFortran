@@ -254,7 +254,7 @@ namespace TyAP
                             parsBuff = "";
                             parsBuff += buff[j]; move = ""; firstParsMove = ""; secondParsMove = "";
                             // expir
-                            j--;
+                            if (status != 14) j--;
                             if (status == 0) { parsBuff = ""; }
                         }
                         else if (secondParsMove == "P3")
