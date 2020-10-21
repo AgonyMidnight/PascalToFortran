@@ -88,18 +88,21 @@ namespace TyAP
             dictionary.Add(temp, temp2);
             countIdentity++;
             textBoxOutToken.Text = textBoxOutToken.Text + " " + dictionary[temp];
+            textBoxUseToken.Text = textBoxUseToken.Text + temp + "     " + dictionary[temp] + "\r\n";
         }
         private void Add_Number (string temp)
         {
-            dictionary.Add(temp, "N" + countIdentity.ToString());
+            dictionary.Add(temp, "N" + countNumber.ToString());
             countNumber++;
             textBoxOutToken.Text = textBoxOutToken.Text + " " + dictionary[temp];
+            textBoxUseToken.Text = textBoxUseToken.Text + temp + "     " + dictionary[temp] + "\r\n";
         }
         private void Add_String_Const (string temp)
         {
-            dictionary.Add(temp, "S" + countIdentity.ToString());
+            dictionary.Add(temp, "S" + countNumber.ToString());
             countStringConst++;
             textBoxOutToken.Text = textBoxOutToken.Text + " " + dictionary[temp];
+            textBoxUseToken.Text = textBoxUseToken.Text + temp + "     " + dictionary[temp] + "\r\n";
         }
         private void getP_Two (string parsbuff)
         {
@@ -109,6 +112,7 @@ namespace TyAP
                 if (keyValue.Key == parsbuff)
                 {
                     textBoxOutToken.Text = textBoxOutToken.Text + " " + keyValue.Value;
+                    textBoxUseToken.Text = textBoxUseToken.Text + parsbuff + "     " + dictionary[parsbuff] + "\r\n";
                     find = true;
                     break;
                 }
@@ -127,14 +131,16 @@ namespace TyAP
                 if (keyValue.Key == parsbuff)
                 {
                     textBoxOutToken.Text = textBoxOutToken.Text + " " + keyValue.Value;
+                    textBoxUseToken.Text = textBoxUseToken.Text + parsbuff + "     " + dictionary[parsbuff] + "\r\n";
                     find = true;
-                }
-                if (find == false)
-                {
-                    Add_word(parsbuff);
                     break;
                 }
+               
               
+            } 
+            if (find == false){
+                    Add_word(parsbuff);
+                   
             }
 
         }
@@ -143,6 +149,7 @@ namespace TyAP
             dictionary.Add(parsbuff, "N" + countIdentity.ToString());
             countNumber++;
             textBoxOutToken.Text = textBoxOutToken.Text + " " + dictionary[parsbuff];
+            textBoxUseToken.Text = textBoxUseToken.Text + parsbuff + "     " + dictionary[parsbuff] + "\r\n";
         }
         private void getP_Four(string parsbuff)
         {
@@ -151,6 +158,7 @@ namespace TyAP
                 if (keyValue.Key == parsbuff)
                 {
                     textBoxOutToken.Text = textBoxOutToken.Text + " " + keyValue.Value;
+                    textBoxUseToken.Text = textBoxUseToken.Text + parsbuff + "     " + dictionary[parsbuff] + "\r\n";
                     break;
                 }
             }
@@ -162,6 +170,7 @@ namespace TyAP
                 if (keyValue.Key == parsbuff)
                 {
                     textBoxOutToken.Text = textBoxOutToken.Text + " " + keyValue.Value;
+                    textBoxUseToken.Text = textBoxUseToken.Text + parsbuff + "     " + dictionary[parsbuff] + "\r\n";
                     break;
                 }
             }
@@ -294,7 +303,7 @@ namespace TyAP
                             getP_Four(parsBuff);
                             //status = 0;
                             parsBuff = ""; move = ""; firstParsMove = ""; secondParsMove = "";
-                            if (status == 14 || status == 7) j++;   //исправление косяка с := после пробела
+                            if (status == 14 || status == 7 || status == 0) j++;   //исправление косяка с := после пробела
                             --j; continue;
 
                         }
