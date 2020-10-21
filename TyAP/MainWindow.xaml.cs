@@ -100,7 +100,7 @@ namespace TyAP
         }
         private void Add_String_Const (string temp)
         {
-            dictionary.Add(temp, "S" + countNumber.ToString());
+            dictionary.Add(temp, "S" + countStringConst.ToString());
             countStringConst++;
             textBoxOutToken.Text = textBoxOutToken.Text + " " + dictionary[temp];
             textBoxUseToken.Text = textBoxUseToken.Text + temp + "     " + dictionary[temp] + "\r\n";
@@ -184,13 +184,13 @@ namespace TyAP
         private int getP_Seven(string buff, int lengthStr)
         {
             string temp = "";
-            for (int i = lengthStr; buff[i] != '\''; i++)
+            for (int i = lengthStr+1; buff[i] != '\''; i++)
             {
                 temp = temp + buff[i];
                 lengthStr++;
             }
             Add_String_Const(temp);
-            return lengthStr;
+            return lengthStr+1;
         }
 
         string getFindDecision(int AnyLexem, int status)
@@ -212,13 +212,23 @@ namespace TyAP
                 buff = buff.Replace("\r", "");
                 //textBoxOutToken.Text = textBoxOutToken.Text + buff + "\r\n";
                 status = 0;
+                int mystr = 0;
                 for (int j = 0; j < buff.Length ; j++) // || parsBuff != ""
                 {
+                    
+                    if(j == 10)
+                    {
+                        ;
+                    }
                     move = getFindDecision(WhatIsIt(buff[j]), status);
                     if ((move.Length <= 2) && (move != "F") && (move != "Z"))
                     {
                         status = Convert.ToInt32(move);
                         parsBuff = parsBuff + buff[j];
+                        if(status == 11)
+                        {
+                            j--;
+                        }
                         continue;
                     }
                     if (move == "F")
@@ -253,6 +263,12 @@ namespace TyAP
                             }
                             //parsBuff = parsBuff + buff[i];
                         }
+
+                        if (firstParsMove == "9")
+                        {
+                            mystr = j;
+                        }
+
                         if (secondParsMove == "P1")
                         {
                             getP_One(parsBuff);
@@ -324,21 +340,32 @@ namespace TyAP
                         else if (secondParsMove == "P6")
                         {
                             parsBuff = getP_Six(parsBuff, buff[j]);
+                            if (firstParsMove == "9")
+                            {
+                                mystr = j;
+                            }
                             move = ""; firstParsMove = ""; secondParsMove = "";
                         }
                         else if (secondParsMove == "P7")
                         {
-                            j = getP_Seven(buff, j);
+                            j = getP_Seven(buff, mystr);
                             //status = 0;
                             parsBuff = ""; move = ""; firstParsMove = ""; secondParsMove = "";
                             //--i; 
+                            
                             continue;
                         }
+                        
                     }
                 }
                 textBoxOutToken.Text = textBoxOutToken.Text + "\r\n";
                 parsBuff = "";
             }
+        }
+
+        private void TextBoxInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
 
         private int WhatIsIt(char parsbuff)
