@@ -110,12 +110,13 @@ namespace TyAP
                 {
                     textBoxOutToken.Text = textBoxOutToken.Text + " " + keyValue.Value;
                     find = true;
-                }
-                if (find == false)
-                {
-                    getP_One(parsbuff);
                     break;
                 }
+                
+            }
+            if (find == false)
+            {
+                getP_One(parsbuff);
             }
         }
         private void getP_One(string parsbuff)
@@ -324,6 +325,7 @@ namespace TyAP
                     }
                 }
                 textBoxOutToken.Text = textBoxOutToken.Text + "\r\n";
+                parsBuff = "";
             }
         }
 
