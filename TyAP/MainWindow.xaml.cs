@@ -216,7 +216,7 @@ namespace TyAP
                 for (int j = 0; j < buff.Length ; j++) // || parsBuff != ""
                 {
                     
-                    if(j == 10)
+                    if(j == 7)
                     {
                         ;
                     }
@@ -290,7 +290,7 @@ namespace TyAP
                             /////ПРОВЕРИТЬ!!!!!111111111!!!!!!!!!!!!!!!ВАЖНААА!ааАААаааа!!11111ОДИН!!!АДЫН!!!!
                             if (firstParsMove == "15")
                             {   //исправлени косяка с 7.
-                                parsBuff.Substring(0, parsBuff.Length - 1);//????
+                                parsBuff = parsBuff.Substring(0, parsBuff.Length - 1);//????
                                 dveTochki = true;
                             }
 
@@ -371,7 +371,7 @@ namespace TyAP
         private int WhatIsIt(char parsbuff)
         {
             if (parsbuff == 'e' || parsbuff == 'E') { return 7; } //экспериментальная функция
-            for (int i = 0; i < 52; i++)
+            for (int i = 0; i < 53; i++)
             {
                 if (parsbuff == Book[i])
                 {
