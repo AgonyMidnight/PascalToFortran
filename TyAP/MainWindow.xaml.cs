@@ -28,7 +28,7 @@ namespace TyAP
         int countNumber = 0;
         int countStringConst = 0;
         int status = 0;
-        string buff = "";
+       
         string parsBuff = "";
         string move = "";
         string firstParsMove = "";
@@ -184,21 +184,18 @@ namespace TyAP
         {
             MessageBox.Show("error");
         }
-
+        ///**************************************************************************************************///
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string[] bbb = textBoxInput.Text.Split('\n');
-            for (int i = 0; i <bbb.Length; i++)
-            {
-               
-                parsBuff = bbb[i]; 
+            string[] buff = textBoxInput.Text.Split('\n');
+            for (int i = 0; i < buff.Length; i++)
+            {   
+                parsBuff = buff[i]; 
                 if (parsBuff.Length > 0)
                 {
-                    parsBuff = parsBuff.Substring(0, parsBuff.Length - 2);
+                    parsBuff = parsBuff.Substring(0, parsBuff.Length - 1);
                     textBoxOutToken.Text = textBoxOutToken.Text + parsBuff + "\r\n";
                 }
-                
-
             }
         }
 
