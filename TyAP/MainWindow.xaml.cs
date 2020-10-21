@@ -24,7 +24,7 @@ namespace TyAP
         Dictionary<string, string> dictionary = new Dictionary<string, string>();
         const int m1 = 19, m2 = 15;
         string [,] MyMatrix  = new string [m1,m2];
-        int countIdentity = 10;
+        int countIdentity = 20;
         int countNumber = 0;
         int countStringConst = 0;
         int status = 0;
@@ -84,7 +84,8 @@ namespace TyAP
         }
         private void Add_word (string temp)
         {
-            dictionary.Add(temp, "I" + countIdentity.ToString());
+            string temp2 = "I" + countIdentity.ToString();
+            dictionary.Add(temp, temp2);
             countIdentity++;
             textBoxOutToken.Text = textBoxOutToken.Text + " " + dictionary[temp];
         }
@@ -103,33 +104,37 @@ namespace TyAP
         private void getP_Two (string parsbuff)
         {
             bool find = false;
-            foreach (KeyValuePair<string, string> keyValue in dictionary)
+            foreach (KeyValuePair<string, string> keyValue in dictionary.ToArray())
             {
                 if (keyValue.Key == parsbuff)
                 {
-                    textBoxOutToken.Text = textBoxOutToken.Text + " " + keyValue.Key;
+                    textBoxOutToken.Text = textBoxOutToken.Text + " " + keyValue.Value;
                     find = true;
                 }
                 if (find == false)
                 {
                     getP_One(parsbuff);
+                    break;
                 }
+                
             }
         }
         private void getP_One(string parsbuff)
         {
             bool find = false; ;
-            foreach (KeyValuePair<string, string> keyValue in dictionary)
+            foreach (KeyValuePair<string, string> keyValue in dictionary.ToArray())
             {
                 if (keyValue.Key == parsbuff)
                 {
-                    textBoxOutToken.Text = textBoxOutToken.Text + " " + keyValue.Key;
+                    textBoxOutToken.Text = textBoxOutToken.Text + " " + keyValue.Value;
                     find = true;
                 }
                 if (find == false)
                 {
                     Add_word(parsbuff);
+                      break;
                 }
+              
             }
 
         }
@@ -141,21 +146,23 @@ namespace TyAP
         }
         private void getP_Four(string parsbuff)
         {
-            foreach (KeyValuePair<string, string> keyValue in dictionary)
+            foreach (KeyValuePair<string, string> keyValue in dictionary.ToArray())
             {
                 if (keyValue.Key == parsbuff)
                 {
-                    textBoxOutToken.Text = textBoxOutToken.Text + " " + keyValue.Key;
+                    textBoxOutToken.Text = textBoxOutToken.Text + " " + keyValue.Value;
+                    break;
                 }
             }
         }
         private void getP_Five (string parsbuff)
         {
-            foreach (KeyValuePair<string, string> keyValue in dictionary)
+            foreach (KeyValuePair<string, string> keyValue in dictionary.ToArray())
             {
                 if (keyValue.Key == parsbuff)
                 {
-                    textBoxOutToken.Text = textBoxOutToken.Text + " " + keyValue.Key;
+                    textBoxOutToken.Text = textBoxOutToken.Text + " " + keyValue.Value;
+                    break;
                 }
             }
         }
@@ -194,7 +201,7 @@ namespace TyAP
                 buff = buff.Replace("\r", "");
                 //textBoxOutToken.Text = textBoxOutToken.Text + buff + "\r\n";
                 status = 0;
-                for (int j = 0; j < buff.Length || parsBuff != ""; j++)
+                for (int j = 0; j < buff.Length ; j++) // || parsBuff != ""
                 {
                     move = getFindDecision(WhatIsIt(buff[j]), status);
                     if ((move.Length <= 2) && (move != "F") && (move != "Z"))
