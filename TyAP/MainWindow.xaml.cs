@@ -315,7 +315,7 @@ namespace TyAP
                         }
                         else if (secondParsMove == "P7")
                         {
-                            i = getP_Seven(buff, j);
+                            j = getP_Seven(buff, j);
                             //status = 0;
                             parsBuff = ""; move = ""; firstParsMove = ""; secondParsMove = "";
                             //--i; 
@@ -323,6 +323,7 @@ namespace TyAP
                         }
                     }
                 }
+                textBoxOutToken.Text = textBoxOutToken.Text + "\r\n";
             }
         }
 
