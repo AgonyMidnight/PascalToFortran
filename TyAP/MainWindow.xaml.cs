@@ -28,7 +28,7 @@ namespace TyAP
         int countNumber = 0;
         int countStringConst = 0;
         int status = 0;
-       
+        string buff = "";
         string parsBuff = "";
         string move = "";
         string firstParsMove = "";
@@ -187,14 +187,133 @@ namespace TyAP
         ///**************************************************************************************************///
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string[] buff = textBoxInput.Text.Split('\n');
-            for (int i = 0; i < buff.Length; i++)
+            string[] arrayBox = textBoxInput.Text.Split('\n');
+            for (int i = 0; i < arrayBox.Length; i++)
             {   
-                parsBuff = buff[i]; 
-                if (parsBuff.Length > 0)
+                buff = arrayBox[i];
+                buff = buff.Replace("\r", "");
+                //textBoxOutToken.Text = textBoxOutToken.Text + buff + "\r\n";
+                status = 0;
+                for (int j = 0; j < buff.Length || parsBuff != ""; j++)
                 {
-                    parsBuff = parsBuff.Substring(0, parsBuff.Length - 1);
-                    textBoxOutToken.Text = textBoxOutToken.Text + parsBuff + "\r\n";
+                    move = getFindDecision(WhatIsIt(buff[j]), status);
+                    if ((move.Length <= 2) && (move != "F") && (move != "Z"))
+                    {
+                        status = Convert.ToInt32(move);
+                        parsBuff = parsBuff + buff[j];
+                        continue;
+                    }
+                    if (move == "F")
+                    {
+                        setF();
+                    }
+                    if (move == "Z")
+                    {
+                        MessageBox.Show("All good!");
+                    }
+                    if (move.Length > 2)
+                    {
+                        if (move[2] == ',')
+                        {
+                            firstParsMove = "";
+                            secondParsMove = "";
+                            firstParsMove = firstParsMove + move[0] + move[1];
+                            status = Convert.ToInt32(firstParsMove);
+                            for (int k = 3; k < move.Length; k++)
+                            {
+                                secondParsMove = secondParsMove + move[k];
+                            }
+                            //parsBuff = parsBuff + buff[i];
+                        }
+                        else if (move[1] == ',')
+                        {
+                            firstParsMove = firstParsMove + move[0];
+                            status = Convert.ToInt32(firstParsMove);
+                            for (int k = 2; k < move.Length; k++)
+                            {
+                                secondParsMove = secondParsMove + move[k];
+                            }
+                            //parsBuff = parsBuff + buff[i];
+                        }
+                        if (secondParsMove == "P1")
+                        {
+                            getP_One(parsBuff);
+                            //status = 0;
+                            parsBuff = ""; move = ""; firstParsMove = ""; secondParsMove = "";
+                        }
+                        else if (secondParsMove == "P2")
+                        {
+                            getP_Two(parsBuff);
+                            //status = 0;
+                            parsBuff = "";
+                            parsBuff += buff[j]; move = ""; firstParsMove = ""; secondParsMove = "";
+                            if (status == 0) { parsBuff = ""; }
+                        }
+                        else if (secondParsMove == "P3")
+                        {
+                            /////ПРОВЕРИТЬ!!!!!111111111!!!!!!!!!!!!!!!ВАЖНААА!ааАААаааа!!11111ОДИН!!!АДЫН!!!!
+                            if (firstParsMove == "15")
+                            {   //исправлени косяка с 7.
+                                parsBuff.Substring(0, parsBuff.Length - 1);//????
+                                dveTochki = true;
+                            }
+
+                            getP_Three(parsBuff);
+                            //status = 0;
+                            parsBuff = "";
+                            parsBuff += buff[j]; move = "";
+                            //туточки?
+
+                            if (firstParsMove == "11" || status == 14 || status == 7)
+                            {   //исправление косяка с двумя подряд разделителями
+                                j++;
+                            }
+
+                            firstParsMove = ""; secondParsMove = "";
+                            if (status == 16) j++; //от сглаза двух палочек
+                            --j; continue;
+                        }
+                        else if (secondParsMove == "P4")
+                        {
+                            if (firstParsMove == "0" && dveTochki == true)
+                            {
+                                parsBuff += '.';
+                                dveTochki = false;
+                                j++;
+                            }
+
+                            getP_Four(parsBuff);
+                            //status = 0;
+                            parsBuff = ""; move = ""; firstParsMove = ""; secondParsMove = "";
+                            if (status == 14 || status == 7) j++;   //исправление косяка с := после пробела
+                            --j; continue;
+
+                        }
+                        else if (secondParsMove == "P5")
+                        {
+                            getP_Five(parsBuff);
+                            //status = 0;
+                            parsBuff = "";
+                            parsBuff += buff[j]; move = ""; firstParsMove = ""; secondParsMove = "";
+                            if (!(status == 1 || status == 2 || status == 3))  //траблы с двойной буквой
+                                --j;
+                            continue;
+                            //тут?) при 3
+                        }
+                        else if (secondParsMove == "P6")
+                        {
+                            parsBuff = getP_Six(parsBuff, buff[j]);
+                            move = ""; firstParsMove = ""; secondParsMove = "";
+                        }
+                        else if (secondParsMove == "P7")
+                        {
+                            i = getP_Seven(buff, j);
+                            //status = 0;
+                            parsBuff = ""; move = ""; firstParsMove = ""; secondParsMove = "";
+                            //--i; 
+                            continue;
+                        }
+                    }
                 }
             }
         }
