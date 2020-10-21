@@ -26,6 +26,7 @@ namespace TyAP
         string [,] MyMatrix  = new string [m1,m2];
         int countIdentity = 20;
         int countNumber = 0;
+        List<string> arrayNumbers = new List<string>();
         int countStringConst = 0;
         int status = 0;
         string buff = "";
@@ -146,10 +147,11 @@ namespace TyAP
         }
         void getP_Three (string parsbuff)
         {
-            dictionary.Add(parsbuff, "N" + countIdentity.ToString());
+            //dictionary.Add(parsbuff, "N" + countIdentity.ToString());
+            arrayNumbers.Add(parsbuff);
+            textBoxOutToken.Text = textBoxOutToken.Text + " " + "N" + countNumber.ToString();
+            textBoxUseToken.Text = textBoxUseToken.Text + parsbuff + "     " + "N" + countNumber.ToString() + "\r\n";
             countNumber++;
-            textBoxOutToken.Text = textBoxOutToken.Text + " " + dictionary[parsbuff];
-            textBoxUseToken.Text = textBoxUseToken.Text + parsbuff + "     " + dictionary[parsbuff] + "\r\n";
         }
         private void getP_Four(string parsbuff)
         {
@@ -289,6 +291,7 @@ namespace TyAP
 
                             firstParsMove = ""; secondParsMove = "";
                             if (status == 16) j++; //от сглаза двух палочек
+                            if (status == 11) j--;
                             --j; continue;
                         }
                         else if (secondParsMove == "P4")
