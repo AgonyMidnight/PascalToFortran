@@ -17,17 +17,17 @@
                 <GradientStop Color="#FF2CBDE8" Offset="0.017"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <TextBox HorizontalAlignment="Left" Height="310" Margin="19,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="213"/>
+        <TextBox x:Name="textBoxInput" HorizontalAlignment="Left" Height="310" Margin="19,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="213" VerticalScrollBarVisibility="Visible" AcceptsReturn="True"  />
         <Label x:Name="label1" Content="Введите необходимый код на Pascal " HorizontalAlignment="Left" Margin="19,10,0,0" VerticalAlignment="Top" Height="26" Width="213"/>
-        <Button Content="" HorizontalAlignment="Left" Margin="248,182,0,0" VerticalAlignment="Top" Width="63" Height="54">
+        <Button Content="" HorizontalAlignment="Left" Margin="248,182,0,0" VerticalAlignment="Top" Width="63" Height="54" Click="Button_Click">
             <Button.Background>
                 <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/button1.png" TileMode="Tile"/>
             </Button.Background>
         </Button>
-        <TextBox x:Name="textBoxOutToken" HorizontalAlignment="Left" Height="310" Margin="338,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="213"/>
+        <TextBox x:Name="textBoxOutToken" HorizontalAlignment="Left" Height="310" Margin="338,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="213"  VerticalScrollBarVisibility="Visible" AcceptsReturn="True" />
         <Label Content="Перевод в токены" HorizontalAlignment="Left" Margin="338,10,0,0" VerticalAlignment="Top" Height="26" Width="111"/>
-        <TextBox HorizontalAlignment="Left" Height="310" Margin="577,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110"/>
-        <TextBox HorizontalAlignment="Left" Height="310" Margin="692,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110"/>
+        <TextBox HorizontalAlignment="Left" Height="310" Margin="577,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110" VerticalScrollBarVisibility="Visible" AcceptsReturn="True" />
+        <TextBox HorizontalAlignment="Left" Height="310" Margin="692,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110" VerticalScrollBarVisibility="Visible" AcceptsReturn="True" />
         <Ellipse x:Name="cyr" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="12" Margin="520,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="13" RenderTransformOrigin="-4.231,0.25"/>
         <Ellipse x:Name="cyrTwo" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="12" Margin="538,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="13" RenderTransformOrigin="-4.231,0.25"/>
         <Ellipse Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="12" Margin="556,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="13" RenderTransformOrigin="-4.231,0.25"/>
