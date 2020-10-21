@@ -116,7 +116,6 @@ namespace TyAP
                     getP_One(parsbuff);
                     break;
                 }
-                
             }
         }
         private void getP_One(string parsbuff)
@@ -132,7 +131,7 @@ namespace TyAP
                 if (find == false)
                 {
                     Add_word(parsbuff);
-                      break;
+                    break;
                 }
               
             }
@@ -254,6 +253,8 @@ namespace TyAP
                             //status = 0;
                             parsBuff = "";
                             parsBuff += buff[j]; move = ""; firstParsMove = ""; secondParsMove = "";
+                            // expir
+                            j--;
                             if (status == 0) { parsBuff = ""; }
                         }
                         else if (secondParsMove == "P3")
