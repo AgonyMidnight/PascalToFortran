@@ -95,10 +95,6 @@ namespace TyAP.Properties {
         ///string W16
         ///char W17
         ///array W18
-        ///
-        ///
-        ///
-        ///
         ///:= O00
         ///+ O01
         ///- O02
@@ -108,20 +104,13 @@ namespace TyAP.Properties {
         ///&lt; O07
         ///= O08
         ///&gt;= O09
-        ///&gt;= O10
+        ///&lt;= O10
         ///&lt;&gt; O11
         ///+= O12
         ///-= O13
         ///*= O14
         ////= O15
         ///^ O16
-        ///
-        ///
-        ///
-        ///
-        ///
-        ///&lt; R01
-        ///&gt; R02
         ///, R03
         ///. R04
         ///: R05
@@ -135,14 +124,20 @@ namespace TyAP.Properties {
         ///&apos; R13
         ///} R14
         ///( R15
-        ///) R16
-        ///
-        ///
-        ///integer  [остаток строки не уместился]&quot;;.
+        ///) R16.
         /// </summary>
         internal static string encoding {
             get {
                 return ResourceManager.GetString("encoding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        internal static string StateNull {
+            get {
+                return ResourceManager.GetString("StateNull", resourceCulture);
             }
         }
         

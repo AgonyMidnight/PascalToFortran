@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TyAP"
         mc:Ignorable="d"
-        Title="PascalToFortran" Height="448" Width="1011">
+        Title="PascalToFortran" Height="448" Width="1300">
     <Grid Margin="0,0,0,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="949*"/>
@@ -27,10 +27,20 @@
         <TextBox x:Name="textBoxOutToken" HorizontalAlignment="Left" Height="310" Margin="338,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="213"  VerticalScrollBarVisibility="Visible" AcceptsReturn="True" />
         <Label Content="Перевод в токены" HorizontalAlignment="Left" Margin="338,10,0,0" VerticalAlignment="Top" Height="26" Width="111"/>
         <TextBox x:Name="textBoxUseToken" HorizontalAlignment="Left" Height="310" Margin="577,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110" VerticalScrollBarVisibility="Visible" AcceptsReturn="True" />
-        <TextBox HorizontalAlignment="Left" Height="310" Margin="692,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110" VerticalScrollBarVisibility="Visible" AcceptsReturn="True" />
+        <TextBox x:Name="textBoxOPZ" HorizontalAlignment="Left" Height="310" Margin="800,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" VerticalScrollBarVisibility="Visible" AcceptsReturn="True" TextChanged="TextBox_TextChanged" />
         <Ellipse x:Name="cyr" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="12" Margin="520,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="13" RenderTransformOrigin="-4.231,0.25"/>
         <Ellipse x:Name="cyrTwo" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="12" Margin="538,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="13" RenderTransformOrigin="-4.231,0.25"/>
         <Ellipse Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="12" Margin="556,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="13" RenderTransformOrigin="-4.231,0.25"/>
+        <Button x:Name="buttonLR1" Content="" HorizontalAlignment="Left" Margin="248,182,0,0" VerticalAlignment="Top" Width="63" Height="54" Click="Button_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="Resources/button1.png" TileMode="Tile"/>
+            </Button.Background>
+        </Button>
+        <Button x:Name="buttonLR2" Content="" HorizontalAlignment="Left" Margin="714,182,0,0" VerticalAlignment="Top" Width="63" Height="54" Click="Button_ClickLR1" Visibility="Visible">
+            <Button.Background>
+                <ImageBrush ImageSource="Resources/button1.png" TileMode="Tile"/>
+            </Button.Background>
+        </Button>
 
     </Grid>
 </Window>

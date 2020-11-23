@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Collections;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -23,10 +24,16 @@ namespace TyAP
     {
         Dictionary<string, string> dictionary = new Dictionary<string, string>();
         const int m1 = 19, m2 = 15;
+        const int s0m1 = 19, s0m2 = 23;
         string [,] MyMatrix  = new string [m1,m2];
+        string[,] StateNull = new string[s0m1, s0m2];
         int countIdentity = 20;
         int countNumber = 0;
+        int countFunction = 0;
+        int countGoTo = 0;
         List<string> arrayNumbers = new List<string>();
+        bool flagFunction = false;
+        bool flagGoTo = false;
         int countStringConst = 0;
         int status = 0;
         string buff = "";
@@ -35,7 +42,9 @@ namespace TyAP
         string firstParsMove = "";
         string secondParsMove = "";
         bool dveTochki = false;
+
         string Out; 
+        
 
          char [] Book = new char[53] { 'q','Q','w','W','e','E','r','R','t','T','y','Y','u',
     'U','i','I','o','O','p','P','a','A','s','S','d','D','f','F','g','G','h','H','j','J',
@@ -43,14 +52,52 @@ namespace TyAP
 
         //словарь цифр
         char [] Number = new char[10] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+
+
+
+        class Stack
+        {
+            public List<string> StackTokens = new List<string>();
+            public List<string> OutString = new List<string>();
+            public int countStack = 0;
+            public int countM = 1;
+            public int countNum = 1;
+            public int countFunc = 1;
+
+
+            public Stack(){
+
+            }
+            public void pop()
+            {
+                string temp = StackTokens[countStack - 1];//&&&&&&&&&&&&
+                StackTokens.RemoveAt(countStack-1);
+                countStack--;
+                getOut(temp);
+            }
+
+            public void push(string temp)
+            {
+                StackTokens.Add(temp);
+                countStack++;
+            }
+            public void getOut (string temp)
+            {
+                OutString.Add(temp);
+            }
+            public void showTokenOPZ()
+            {
+               
+            }
+
+        }
+
         public MainWindow()
         {
             InitializeComponent();
+
             Begin();
             
-
-
-
 
         }
 
@@ -82,14 +129,49 @@ namespace TyAP
                     dictionary.Add(value[0], value[1]);
                 }
             }
+            StreamReader TableStateNull = new StreamReader("Resources\\StateNull.txt");
+            str = 0;
+            while (!TableStateNull.EndOfStream)
+            {
+                temp = TableStateNull.ReadLine();
+                if (temp != null)
+                {
+                    string[] value = temp.Split('\t');
+                    for (int i = 0; i < s0m2; i++)
+                    {
+                       StateNull[str, i] = value[i];
+                    }
+                    str++;
+                }
+            }
         }
         private void Add_word (string temp)
         {
-            string temp2 = "I" + countIdentity.ToString();
-            dictionary.Add(temp, temp2);
-            countIdentity++;
-            textBoxOutToken.Text = textBoxOutToken.Text + " " + dictionary[temp];
-            textBoxUseToken.Text = textBoxUseToken.Text + temp + "     " + dictionary[temp] + "\r\n";
+            if (flagFunction) {
+                string temp2 = "F" + countFunction.ToString();
+                dictionary.Add(temp, temp2);
+                countIdentity++;
+                textBoxOutToken.Text = textBoxOutToken.Text + " " + dictionary[temp];
+                textBoxUseToken.Text = textBoxUseToken.Text + temp + "     " + dictionary[temp] + "\r\n";
+                flagFunction = false;
+            }
+            else if (flagGoTo)
+            {
+                string temp2 = "G" + countGoTo.ToString();
+                dictionary.Add(temp, temp2);
+                countIdentity++;
+                textBoxOutToken.Text = textBoxOutToken.Text + " " + dictionary[temp];
+                textBoxUseToken.Text = textBoxUseToken.Text + temp + "     " + dictionary[temp] + "\r\n";
+                flagGoTo = false;
+            }
+            else
+            {
+                string temp2 = "I" + countIdentity.ToString();
+                dictionary.Add(temp, temp2);
+                countIdentity++;
+                textBoxOutToken.Text = textBoxOutToken.Text + " " + dictionary[temp];
+                textBoxUseToken.Text = textBoxUseToken.Text + temp + "     " + dictionary[temp] + "\r\n";
+            }
         }
         private void Add_Number (string temp)
         {
@@ -134,6 +216,8 @@ namespace TyAP
                     textBoxOutToken.Text = textBoxOutToken.Text + " " + keyValue.Value;
                     textBoxUseToken.Text = textBoxUseToken.Text + parsbuff + "     " + dictionary[parsbuff] + "\r\n";
                     find = true;
+                    if (parsbuff == "procedure" || parsbuff == "function") { flagFunction = true; }
+                    if (parsbuff == "GOTO" || parsbuff == "goto") { flagGoTo = true; }
                     break;
                 }
                
@@ -361,9 +445,26 @@ namespace TyAP
                 textBoxOutToken.Text = textBoxOutToken.Text + "\r\n";
                 parsBuff = "";
             }
+            buttonLR2.Visibility = Visibility;
         }
 
         private void TextBoxInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void Button_ClickLR1(object sender, RoutedEventArgs e)
+        {
+            Stack stack = new Stack();
+            stack.push("fffff");
+            stack.OutString.ForEach(delegate (string value)
+           {
+               textBoxOPZ.Text = textBoxOPZ.Text + value + "   ";
+           });
+
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }
