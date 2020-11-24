@@ -396,6 +396,7 @@ namespace TyAP
                             // expir
                             if (status != 14) j--;
                             if (status == 0) { parsBuff = ""; }
+                            if (status == 12 || status == 13 || status == 7) j++;
                         }
                         else if (secondParsMove == "P3")
                         {
@@ -417,7 +418,7 @@ namespace TyAP
                             }
 
                             firstParsMove = ""; secondParsMove = "";
-                            if (status == 16) j++; //от сглаза двух палочек
+                            if (status == 16 || status == 12 || status == 13) j++; //от сглаза двух палочек
                             if (status == 11) j--;
                             --j; continue;
                         }
