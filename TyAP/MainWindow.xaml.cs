@@ -448,10 +448,9 @@ namespace TyAP
                              if(status == 7)       // ибо траблы с + (превращался в ++)                                                                  НОВОЕ!!!
                             {
                                 j++;
-                                parsBuff = "";
+                                //parsBuff = "";    //ЛИШНЕЕ
                             }
                             continue;
-                            //тут?) при 3
                         }
                         else if (secondParsMove == "P6")
                         {
@@ -486,7 +485,7 @@ namespace TyAP
         }
         int whatLastInTheStack(string token, int state)
         {
-            
+            //ТАБЛИЦА ПО  ВЕРТИКАЛИ
             if (state == 0) {
                 if (token == "") return 0;   // в стеке пусто
                 if (token == "R15") return 1;   //(
@@ -552,18 +551,27 @@ namespace TyAP
                     while (ArrayMove.Count > 0)
                     {
                         //textBoxOPZ.Text += ArrayMove[0]+"\n";
-                        if (ArrayMove[0] == "Pop") stack.pop();
-                        if (ArrayMove[0] == "Pop(X)") stack.pop(token[j]);
-                        if (ArrayMove[0] == "Push")   stack.push(token[j]);
-                        if (ArrayMove[0] == "getOut") stack.getOut();
+                        if (ArrayMove[0] == "Pop")      stack.pop();
+                        if (ArrayMove[0] == "Pop(X)")   stack.pop(token[j]);
+                        if (ArrayMove[0] == "Push")     stack.push(token[j]);
+                        if (ArrayMove[0] == "getOut")   stack.getOut();
                         if(ArrayMove[0] == "Hold")      j--;
 
 
                          ArrayMove.RemoveAt(0);
 
-                        //State(1) === Pop(X) === Push === Pop(X) === N ===
+                        /*
+                         * x and y ;
+                            Pop(X)
+                            Push
+                            Pop(X)
+                            getOut
+                            Hold
+                            N
+                            */
                     }
-                 }
+                    //textBoxOPZ.Text += "\n======\n";
+                }
             }
             foreach (string str in stack.OutString)
             {
@@ -580,6 +588,7 @@ namespace TyAP
 
         private int WhatIsToken (string token, int state)
         {
+            //ТАБЛИЦА ПО ГОРИЗОНТАЛИ
             //ИФ СТАТЕ == 1 ТО ЧУТЬ ПО ДРУГОМУ ИСКАТЬ, ТО ЖЕ САМОЕ ДЛЯ ВЕРХНЕЙ ФУНКЦИИ
             if (state == 0 )
             {

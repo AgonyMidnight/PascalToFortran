@@ -10,8 +10,8 @@ Err	Err	State(1),Pop(X)	N	N	Err	Swap(i,j,k+1_D)	Pop(йн),getOut	Err	Err	Err	Err	E
 Err	Err	Err	Err	Err	Err	Pop(k_type),getOut,Swap(i,j,k+1_D)	Pop(k_type),getOut,Hold	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err
 Err	Err	Err	Err	Err	Err	Err	Pop(KP),getOut	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Pop(KP),getOut	Err	Err	Err
 Pop(X)	Pop(X)	State(1),Pop(X)	Push	Err	Err	Err	Pop,getOut,Hold	Err	Err	Pop,getOut,Hold	Err	Err	Err	Err	Err	Push	Push	Push	Push	Push	Push	Push	Err	Err	Err	Err
-Pop(X)	Pop(X)	State(1),Pop(X)	Push	Pop,getOut,Hold	Pop,getOut,Hold	Pop,getOut,Hold	getOut,Hold	Err	Err	Err	Err	Err	Err	Err	Err	Pop,getOut,Hold	Push	Push	Push	Push	Push	Push	Err	Err	Err	Err
-Pop(X)	Pop(X)	State(1),Pop(X)	Push	Pop,getOut,Hold	Pop,getOut,Hold	Pop,getOut,Hold	getOut,Hold	Err	Err	Err	Err	Err	Err	Err	Err	Pop,getOut,Hold	Pop,getOut,Hold	Push	Push	Push	Push	Push	Err	Err	Err	Err
+Pop(X)	Pop(X)	State(1),Pop(X)	Push	Pop,getOut,Hold	Pop,getOut,Hold	Pop,getOut,Hold	Pop,getOut,Hold	Err	Err	Err	Err	Err	Err	Err	Err	Pop,getOut,Hold	Push	Push	Push	Push	Push	Push	Err	Err	Err	Err
+Pop(X)	Pop(X)	State(1),Pop(X)	Push	Pop,getOut,Hold	Pop,getOut,Hold	Pop,getOut,Hold	Pop,getOut,Hold	Err	Err	Err	Err	Err	Err	Err	Err	Pop,getOut,Hold	Pop,getOut,Hold	Push	Push	Push	Push	Push	Err	Err	Err	Err
 Pop(X)	Pop(X)	State(1),Pop(X)	Push	Pop,getOut,Hold	Pop,getOut,Hold	Pop,getOut,Hold	Pop,getOut,Hold	Err	Err	Err	Err	Err	Err	Err	Err	Pop,getOut,Hold	Pop,getOut,Hold	Pop,getOut,Hold	Push	Push	Push	Push	Err	Err	Err	Err
 Pop(X)	Pop(X)	State(1),Pop(X)	Push	Pop,getOut,Hold	Pop,getOut,Hold	Pop,getOut,Hold	Pop,getOut,Hold	Err	Err	Err	Err	Err	Err	Err	Err	Pop,getOut,Hold	Pop,getOut,Hold	Pop,getOut,Hold	Pop,getOut,Hold	Push	Push	Push	Err	Err	Err	Err
 Pop(X)	Pop(X)	State(1),Pop(X)	Push	Pop,getOut,Hold	Pop,getOut,Hold	Pop,getOut,Hold	Pop,getOut,Hold	Err	Err	Err	Err	Err	Err	Err	Err	Pop,getOut,Hold	Pop,getOut,Hold	Pop,getOut,Hold	Pop,getOut,Hold	Pop,getOut,Hold	Push	Push	Err	Err	Err	Err
