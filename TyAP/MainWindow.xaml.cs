@@ -222,6 +222,8 @@ namespace TyAP
                     textBoxOutToken.Text = textBoxOutToken.Text + " " + keyValue.Value;
                     textBoxUseToken.Text = textBoxUseToken.Text + parsbuff + "     " + dictionary[parsbuff] + "\r\n";
                     find = true;
+                    if (parsbuff == "procedure" || parsbuff == "function") { flagFunction = true; }
+                    if (parsbuff == "GOTO" || parsbuff == "goto") { flagGoTo = true; }
                     break;
                 }
                 
