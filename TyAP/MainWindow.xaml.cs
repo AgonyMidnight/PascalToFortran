@@ -603,20 +603,7 @@ namespace TyAP
         private int WhatIsIt(char parsbuff)
         {
             if (parsbuff == 'e' || parsbuff == 'E') { return 7; } //экспериментальная функция
-            for (int i = 0; i < 53; i++)
-            {
-                if (parsbuff == Book[i])
-                {
-                    return 0;
-                }
-            }
-            for (int i = 0; i < 10; i++)
-            {
-                if (parsbuff == Number[i])
-                {
-                    return 1;
-                }
-            }
+            
             if (parsbuff == '.') { return 2; }
             if (parsbuff == '<') { return 3; }
             if (parsbuff == '>') { return 4; }
@@ -631,10 +618,26 @@ namespace TyAP
             if (parsbuff == '\0') { return 12; }
             if (parsbuff == ':') { return 13; }
             if (parsbuff == '+' || parsbuff == '-') { return 14; }
-            else {
-                MessageBox.Show("Разделитель не найден!");
-                return 80;
+
+            for (int i = 0; i < 53; i++)
+            {
+                if (parsbuff == Book[i])
+                {
+                    return 0;
+                }
             }
+            for (int i = 0; i < 10; i++)
+            {
+                if (parsbuff == Number[i])
+                {
+                    return 1;
+                }
+            }
+
+            
+            MessageBox.Show("Разделитель не найден!");
+            return 80;
+            
         }
 
     }
