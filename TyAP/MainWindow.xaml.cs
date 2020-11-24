@@ -426,8 +426,12 @@ namespace TyAP
                             //status = 0;
                             parsBuff = "";
                             parsBuff += buff[j]; move = ""; firstParsMove = ""; secondParsMove = "";
-                            if (!(status == 1 || status == 2 || status == 3))  //траблы с двойной буквой
-                                --j;
+                            if (!(status == 1 || status == 2 || status == 3 )) --j; //траблы с двойной буквой     
+                             if(status == 7)       // ибо траблы с + (превращался в ++)                                                                  НОВОЕ!!!
+                            {
+                                j++;
+                                parsBuff = "";
+                            }
                             continue;
                             //тут?) при 3
                         }
@@ -526,8 +530,11 @@ namespace TyAP
                         if (ArrayMove[0] == "Pop") stack.pop();
                         if (ArrayMove[0] == "Pop(X)") stack.pop(token[j]);
                         if (ArrayMove[0] == "Push")   stack.push(token[j]);
+                        if (ArrayMove[0] == "getOut") stack.getOut();
+                        if(ArrayMove[0] == "Hold")      j--;
 
-                        ArrayMove.RemoveAt(0);
+
+                         ArrayMove.RemoveAt(0);
 
                         //State(1) === Pop(X) === Push === Pop(X) === N ===
                     }
@@ -535,7 +542,7 @@ namespace TyAP
             }
             foreach (string str in stack.OutString)
             {
-                textBoxOPZ.Text += str;
+                textBoxOPZ.Text += str+'\n';
             }
             
 
