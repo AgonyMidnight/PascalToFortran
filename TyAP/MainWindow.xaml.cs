@@ -290,6 +290,11 @@ namespace TyAP
             return MyMatrix[status, AnyLexem];
         }
 
+        string getFindMoveForToken(int Token, int state)
+        {
+            return StateNull[state, Token];
+        }
+
         void setF()
         {
             MessageBox.Show("error");
@@ -302,6 +307,7 @@ namespace TyAP
             {   
                 buff = arrayBox[i];
                 buff = buff.Replace("\r", "");
+                buff += "\n";
                 //textBoxOutToken.Text = textBoxOutToken.Text + buff + "\r\n";
                 status = 0;
                 int mystr = 0;
@@ -460,20 +466,120 @@ namespace TyAP
         {
 
         }
+        int getState(string token)
+        {
+            if (token == "R15")
+            {
+                return 1;
+            }
+            if (token == "iA")
+            {
+                return 2;
+            }
+            if (token[0] == 'F')
+            {
+                return 3;
+            }
+            if (token == "W03")
+            {
+                return 4;
+            }
+            if (token[0] == 'I' && token[1] == 'F' && token[2] == 'M') 
+            {
+                return 5;
+            }
+            if (token[0] == 'I' && token[1] == 'F' && token[2] == 'M') //+1
+            {
+                return 6;
+            }
+            if (token[0] == 'P' && token[1] == 'R' && token[2] == 'O')
+            {
+                return 7;
+            }
+            if (token[0] == 'D' && token[1] == 'C' && token[2] == 'L')
+            {
+                return 8;
+            }
+            if (token == "W14" || token == "W15" || token == "W16" || token == "W17" || token == "W18")
+            {
+                return 9;
+            }
+            if (token == "W02") //end
+            {
+                return 10;
+            }
+            if (token == "O00")
+            {
+                return 11;
+            }
+            if (token == "W12")
+            {
+                return 12;
+            }
+            if (token == "W11")
+            {
+                return 13;
+            }
+            if (token == "W13")
+            {
+                return 14;
+            }
+            if (token == "O06" || token == "O07" || token == "O08" || token == "O09" || token == "O10" || token == "O11")
+            {
+                return 15;
+            }
+            if (token == "O01" || token == "O02")
+            {
+                return 16;
+            }
+            if (token == "O03" || token == "O04")
+            {
+                return 17;
+            }
+            if (token == "O16")
+            {
+                return 18;
+            }
+            else { return 777; }
+           
+        }
         /*******************************        2 LABA                                    ************************************************/
         private void Button_ClickLR1(object sender, RoutedEventArgs e)
         {
             Stack stack = new Stack();
+          
             string[] arrayBox = textBoxOutToken.Text.Split('\n');
             for (int i = 0; i < arrayBox.Length; i++)
             {
+                int state = 0;
                 buff = arrayBox[i];
                 string[] token = buff.Split(' ');
                 for (int j = 0; j < token.Length; j++) {
-                    textBoxOPZ.Text += token[j]+"<>";
+                    if (token[j] == "" || token[j] == "\n" || token[j] == " " || token[j] == "\r") continue;
+                    if(stack.StackTokens.Count == 0) { state = 0; }
+                    else
+                    {
+                        getState(stack.StackTokens.Last());
+                    }
+                    string move = getFindMoveForToken(WhatIsToken(token[j]), state);
+                    string[] ArrayMove = move.Split(',');
+                    if (ArrayMove.Length == 1)
+                    {
+                        if (ArrayMove[0] == "Push")
+                        {
+                            stack.push(token[j]);
+                        }
+                    }
+                    if (ArrayMove.Length == 2)
+                    {
 
-             }
-        }
+                    }
+                    if (ArrayMove.Length == 3)
+                    {
+
+                    }
+                }
+            }
         
         // || parsBuff != ""
 
@@ -492,6 +598,112 @@ namespace TyAP
 
         }
 
+        private int WhatIsToken (string token)
+        {
+            if ( token[0] == 'N' || token[0]== 'S')
+            {
+                return 0;
+            }
+            if (token[0] == 'I' )
+            {
+                return 1;
+            }
+            if (token == "R15")
+            {
+                return 2;
+            }
+            if (token == "R16")
+            {
+                return 3;
+            }
+            if (token == "R08")
+            {
+                return 4;
+            }
+            if (token == "R03")
+            {
+                return 5;
+            }
+            if (token == "R06")
+            {
+                return 6;
+            }
+            if (token == "W03")
+            {
+                return 7;
+            }
+            if (token == "W05")
+            {
+                return 8;
+            }
+            if (token == "W04")
+            {
+                return 9;
+            }
+            if (token == "W08")
+            {
+                return 10;
+            }
+            if (token == "W06")
+            {
+                return 11;
+            }
+            if (token == "W02")
+            {
+                return 12;
+            }
+            if (token == "W14" || token == "W15" || token == "W16" || token == "W17" || token == "W18" ) 
+            {
+                return 13;
+            }
+            if (token == "O00")
+            {
+                return 14;
+            }
+            if (token == "W12")
+            {
+                return 15;
+            }
+            if (token == "W11")
+            {
+                return 16;
+            }
+            if (token == "W13")
+            {
+                return 17;
+            }
+            if (token == "O06" || token == "O07" || token == "O08" || token == "O09" || token == "O10" || token == "O11")
+            {
+                return 18;
+            }
+            if (token == "O01" || token == "O02")
+            {
+                return 19;
+            }
+            if (token == "O03" || token == "O04")
+            {
+                return 20;
+            }
+            if (token == "O16")
+            {
+                return 21;
+            }
+            if (token == "R04")
+            {
+                return 22;
+            }
+            if (token == "R05")
+            {
+                return 23;
+            }
+            if (token == "R07")
+            {
+                return 24;
+            }
+            else { return 777; 
+            }
+
+        }
         private int WhatIsIt(char parsbuff)
         {
             if (parsbuff == 'e' || parsbuff == 'E') { return 7; } //экспериментальная функция
