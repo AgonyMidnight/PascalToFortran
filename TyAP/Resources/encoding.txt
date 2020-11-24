@@ -22,6 +22,7 @@ real W15
 string W16
 char W17
 array W18
+for W19
 := O00
 + O01
 - O02

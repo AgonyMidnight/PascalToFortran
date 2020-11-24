@@ -1,0 +1,19 @@
+getOut(X)	State(1),getOut(X)	Push	Err	Err	Err	N	Push(IF)	Err	Err	Push(i,j_Proc)	Push(i,j_D)	Push	Err	Push	Push	Push	Push	Push	Push	Push	Push	Err	Err	Err
+getOut(X)	State(1),getOut(X)	Push	Pop	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Push	Push	Push	Push	Push	Push	Push	Err	Err	Err
+getOut(X)	State(1),getOut(X)	Push	Err	getOut,Pop	swap(i+1_A)	Err	Err	Err	Err	Err	Err	Err	Err	Err	Push	Push	Push	Push	Push	Push	Push	Err	Err	Err
+getOut(X)	State(1),getOut(X)	Push	getOut,Pop	Err	swap(i+1_F)	Err	Err	Err	Err	Err	Err	Err	Err	Err	Push	Push	Push	Push	Push	Push	Push	Err	Err	Err
+getOut(X)	State(1),getOut(X)	Push	Err	Err	Err	Err	Err	getOut(Mi_UPL),swap(Mi_IF)	Err	Err	Err	Err	Err	Err	Push	Push	Push	Push	Push	Push	Push	Err	Err	Err
+getOut(X)	State(1),getOut(X)	Push	Err	Err	Err	getOut(Mi:),Pop	Push(IF)	Err	getOut(Mi+1_BP_Mi:), swap(Mi+1_IF)	Err	Err	Err	Err	Push	Push	Push	Push	Push	Push	Push	Push	Err	Err	Err
+getOut(X)	State(1),getOut(X)	Push	Err	Err	Err	getOut(Mi+1:),Pop	Push(IF)	Err	getOut(Mi+1:),Pop,hold	Err	Err	Err	Err	Push	Push	Push	Push	Push	Push	Push	Push	Err	Err	Err
+Err	State(1),getOut(X)	Push	Err	Err	Err	getOut,Pop	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err
+Err	State(1),getOut(X)	N	N	Err	swap(i,j,k+1_D)	getOut(KO),Pop	Err	Err	Err	Err	Err	Err	Push	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err
+Err	Err	Err	Err	Err	getOut(k_type),Pop,swap(i,j,k+1_D)	getOut(k_type),Pop,hold	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err
+Err	Err	Err	Err	Err	Err	getOut(KP),Pop	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	getOut(KP),Pop	Err	Err
+getOut(X)	State(1),getOut(X)	Push	Err	Err	Err	getOut,Pop,hold	Err	Err	getOut,Pop,hold	Err	Err	Err	Err	Err	Push	Push	Push	Push	Push	Push	Push	Err	Err	Err
+getOut(X)	State(1),getOut(X)	Push	getOut,Pop,hold	getOut,Pop,hold	getOut,Pop,hold	Pop,hold	Err	Err	Err	Err	Err	Err	Err	Err	getOut,Pop,hold	Push	Push	Push	Push	Push	Push	Err	Err	Err
+getOut(X)	State(1),getOut(X)	Push	getOut,Pop,hold	getOut,Pop,hold	getOut,Pop,hold	Pop,hold	Err	Err	Err	Err	Err	Err	Err	Err	getOut,Pop,hold	getOut,Pop,hold	Push	Push	Push	Push	Push	Err	Err	Err
+getOut(X)	State(1),getOut(X)	Push	getOut,Pop,hold	getOut,Pop,hold	getOut,Pop,hold	getOut,Pop,hold	Err	Err	Err	Err	Err	Err	Err	Err	getOut,Pop,hold	getOut,Pop,hold	getOut,Pop,hold	Push	Push	Push	Push	Err	Err	Err
+getOut(X)	State(1),getOut(X)	Push	getOut,Pop,hold	getOut,Pop,hold	getOut,Pop,hold	getOut,Pop,hold	Err	Err	Err	Err	Err	Err	Err	Err	getOut,Pop,hold	getOut,Pop,hold	getOut,Pop,hold	getOut,Pop,hold	Push	Push	Push	Err	Err	Err
+getOut(X)	State(1),getOut(X)	Push	getOut,Pop,hold	getOut,Pop,hold	getOut,Pop,hold	getOut,Pop,hold	Err	Err	Err	Err	Err	Err	Err	Err	getOut,Pop,hold	getOut,Pop,hold	getOut,Pop,hold	getOut,Pop,hold	getOut,Pop,hold	Push	Push	Err	Err	Err
+getOut(X)	State(1),getOut(X)	Push	getOut,Pop,hold	getOut,Pop,hold	getOut,Pop,hold	getOut,Pop,hold	Err	Err	Err	Err	Err	Err	Err	Err	getOut,Pop,hold	getOut,Pop,hold	getOut,Pop,hold	getOut,Pop,hold	getOut,Pop,hold	getOut,Pop,hold	Push	Err	Err	Err
+getOut(X)	State(1),getOut(X)	Push	getOut,Pop,hold	getOut,Pop,hold	getOut,Pop,hold	getOut,Pop,hold	Err	Err	Err	Err	Err	Err	Err	Err	getOut,Pop,hold	getOut,Pop,hold	getOut,Pop,hold	getOut,Pop,hold	getOut,Pop,hold	getOut,Pop,hold	getOut,Pop,hold	Err	Err	Err

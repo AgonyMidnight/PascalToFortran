@@ -24,7 +24,7 @@ namespace TyAP
     {
         Dictionary<string, string> dictionary = new Dictionary<string, string>();
         const int m1 = 19, m2 = 15;
-        const int s0m1 = 19, s0m2 = 23;
+        const int s0m1 = 19, s0m2 = 25;
         string [,] MyMatrix  = new string [m1,m2];
         string[,] StateNull = new string[s0m1, s0m2];
         int countIdentity = 20;
@@ -58,6 +58,7 @@ namespace TyAP
         class Stack
         {
             public List<string> StackTokens = new List<string>();
+            public int state = 0;
             public List<string> OutString = new List<string>();
             public int countStack = 0;
             public int countM = 1;
@@ -68,20 +69,25 @@ namespace TyAP
             public Stack(){
 
             }
-            public void pop()
+            public void pop(string x = null) //вых
             {
                 string temp = StackTokens[countStack - 1];//&&&&&&&&&&&&
                 StackTokens.RemoveAt(countStack-1);
                 countStack--;
                 getOut(temp);
             }
+      
+            public void setState()
+            {
 
-            public void push(string temp)
+            }
+
+            public void push(string temp) //вт
             {
                 StackTokens.Add(temp);
                 countStack++;
             }
-            public void getOut (string temp)
+            public void getOut (string temp)  //выт
             {
                 OutString.Add(temp);
             }
@@ -286,7 +292,7 @@ namespace TyAP
         {
             MessageBox.Show("error");
         }
-        ///**************************************************************************************************///
+        /*******************************        1 LABA                                    ************************************************/
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             string[] arrayBox = textBoxInput.Text.Split('\n');
@@ -452,11 +458,13 @@ namespace TyAP
         {
 
         }
-
+        /*******************************        2 LABA                                    ************************************************/
         private void Button_ClickLR1(object sender, RoutedEventArgs e)
         {
             Stack stack = new Stack();
-            stack.push("fffff");
+            string g = StateNull[1, 3];
+            stack.push(g);
+            stack.pop();
             stack.OutString.ForEach(delegate (string value)
            {
                textBoxOPZ.Text = textBoxOPZ.Text + value + "   ";
