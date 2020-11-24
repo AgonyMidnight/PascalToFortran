@@ -489,7 +489,7 @@ namespace TyAP
             if (state == 0) {
                 if (token == "") return 0;   // в стеке пусто
                 if (token == "R15") return 1;   //(
-                if (token[0] == 'A') return 2;   //Array i
+                if (token[0] == 'А' && token[1] == 'Э' && token[2] == 'М') return 2;   //Array i
                 if (token[0] == 'F') return 3;   //Function i
                 if (token == "W03") return 4;   //if
 
@@ -538,6 +538,9 @@ namespace TyAP
             {
                 buff = arrayBox[i];                             //считали первую строку
                 string[] token = buff.Split(' ');               //разбили её по пробелам на массив
+
+                int countAEM = 2;
+
                 for (int j = 0; j < token.Length; j++) {
                     token[j] = token[j].Replace("\r", "");          //Удалили в элементе все лишнее
                     if (token[j] == "" || token[j] == "\n" || token[j] == " " || token[j] == "\r") continue;    //Если там был пробел, то ничего не надо делать
@@ -547,12 +550,19 @@ namespace TyAP
                     string move = getFindMoveForToken(whatLastInTheStack(lastInStack, stack.state) , WhatIsToken(token[j], stack.state), stack.state); //Поучаем данные из таблицы
 
                     List<string> ArrayMove = new List<string>(move.Split(','));         //Создаем Лист, в котором перечислены действия
+
+                    
                     while (ArrayMove.Count > 0)
                     {
                         //textBoxOPZ.Text += ArrayMove[0]+"\n";
                         if (ArrayMove[0] == "Pop")      stack.pop();
                         if (ArrayMove[0] == "Pop(X)")   stack.pop(token[j]);
+
                         if (ArrayMove[0] == "Push")     stack.push(token[j]);
+                        if (ArrayMove[0] == "Push(2A)") stack.push("АЭМ"+ countAEM.ToString());
+
+                        if (ArrayMove[0] == "Swap(i+1_A)") stack.swap("АЭМ" + (++countAEM).ToString());
+
                         if (ArrayMove[0] == "getOut")   stack.getOut();
                         if (ArrayMove[0] == "Hold")      j--;
 
@@ -563,15 +573,6 @@ namespace TyAP
 
                         ArrayMove.RemoveAt(0);
 
-                        /*
-                         * x and y ;
-                            Pop(X)
-                            Push
-                            Pop(X)
-                            getOut
-                            Hold
-                            N
-                            */
                     }
                     //textBoxOPZ.Text += "\n======\n";
                 }
