@@ -99,6 +99,9 @@
     <Content Include="Resources\StateNull.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\StateOne.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\table.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

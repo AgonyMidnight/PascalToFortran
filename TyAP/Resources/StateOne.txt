@@ -1,0 +1,2 @@
+Pop,getOut	State(0),Hold	Pop(X),Swap(2F),State(0)	Err
+State(0),Hold	Push(1F)	Err	State(0),Hold

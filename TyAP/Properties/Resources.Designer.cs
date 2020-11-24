@@ -95,6 +95,7 @@ namespace TyAP.Properties {
         ///string W16
         ///char W17
         ///array W18
+        ///for W19
         ///:= O00
         ///+ O01
         ///- O02
@@ -133,11 +134,25 @@ namespace TyAP.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на Pop(X)	Pop(X)	State(1),Pop(X)	Push	Err	Err	Err	N	Push(IF)	Err	Err	Push(i,j_Proc)	Push(i,j_D)	Push	Err	Push	Push	Push	Push	Push	Push	Push	Push	Err	Err	Err	Push(BP)
+        ///Pop(X)	Pop(X)	State(1),Pop(X)	Push	getOut	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Push	Push	Push	Push	Push	Push	Push	Err	Err	Err	Err
+        ///Pop(X)	Pop(X)	State(1),Pop(X)	Push	Err	Pop,getOut	Swap(i+1_A)	Err	Err	Err	Err	Err	Err	Err	Err	Err	Push	Push	Push	Push	Push	Push	Push	Err	Err	Err	Err
+        ///Pop(X)	Pop(X)	State(1),Pop(X)	Push	Pop,getOut	Err	Swap(i+1_F [остаток строки не уместился]&quot;;.
         /// </summary>
         internal static string StateNull {
             get {
                 return ResourceManager.GetString("StateNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Pop,getOut	State(0),Hold	Pop(X),Swap(2F),State(0)	Err
+        ///State(0),Hold	Push(1F)	Err	State(0),Hold
+        ///.
+        /// </summary>
+        internal static string StateOne {
+            get {
+                return ResourceManager.GetString("StateOne", resourceCulture);
             }
         }
         

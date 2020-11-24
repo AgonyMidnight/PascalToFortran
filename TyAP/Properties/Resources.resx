@@ -1156,6 +1156,9 @@
   <data name="StateNull" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\StateNull.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
   </data>
+  <data name="StateOne" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\StateOne.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
+  </data>
   <data name="table" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\table.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
   </data>

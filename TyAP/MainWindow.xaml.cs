@@ -25,8 +25,10 @@ namespace TyAP
         Dictionary<string, string> dictionary = new Dictionary<string, string>();
         const int m1 = 19, m2 = 15;
         const int s0m1 = 21, s0m2 = 27;
+        const int s1m1 = 2, s1m2 = 4;
         string [,] MyMatrix  = new string [m1,m2];
         string[,] StateNull = new string[s0m1, s0m2];
+        string[,] StateOne = new string[s1m1, s1m2];
         int countIdentity = 20;
         int countNumber = 0;
         int countFunction = 0;
@@ -43,12 +45,12 @@ namespace TyAP
         string secondParsMove = "";
         bool dveTochki = false;
 
-        string Out; 
-        
+        string Out;
 
-         char [] Book = new char[53] { 'q','Q','w','W','e','E','r','R','t','T','y','Y','u',
-    'U','i','I','o','O','p','P','a','A','s','S','d','D','f','F','g','G','h','H','j','J',
-    'k','K','l','L','z','Z','x','X','c','C','v','V','b','B','n','N','m','M', '_' };
+
+        char[] Book = new char[53] { 'q','Q','w','W','e','E','r','R','t','T','y','Y','u',
+        'U','i','I','o','O','p','P','a','A','s','S','d','D','f','F','g','G','h','H','j','J',
+        'k','K','l','L','z','Z','x','X','c','C','v','V','b','B','n','N','m','M', '_' };
 
         //словарь цифр
         char [] Number = new char[10] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
@@ -148,6 +150,21 @@ namespace TyAP
                     for (int i = 0; i < s0m2; i++)
                     {
                        StateNull[str, i] = value[i];
+                    }
+                    str++;
+                }
+            }
+            str = 0;
+            StreamReader TableStateOne = new StreamReader("Resources\\StateOne.txt");
+            while (!TableStateOne.EndOfStream)
+            {
+                temp = TableStateOne.ReadLine();
+                if (temp != null)
+                {
+                    string[] value = temp.Split('\t');
+                    for (int i = 0; i < s1m2; i++)
+                    {
+                        StateOne[str, i] = value[i];
                     }
                     str++;
                 }
@@ -293,7 +310,7 @@ namespace TyAP
         string getFindMoveForToken(int whatLastInTheStack, int whatInTheStr, int state = 0)
         {
             if (state == 0) return StateNull[whatLastInTheStack, whatInTheStr]; //большая таблица
-            if (state == 1) return "пока не реализованно";                      //маленькая таблица
+            if (state == 1) return StateOne[whatLastInTheStack, whatInTheStr];  //маленькая таблица
             else return "Ошибка, состояние может быть только 0 или 1";
         }
 
@@ -466,41 +483,48 @@ namespace TyAP
         {
 
         }
-        int whatLastInTheStack(string token)
+        int whatLastInTheStack(string token, int state)
         {
-            if (token == "")        return 0;   // в стеке пусто
-            if (token == "R15")     return 1;   //(
-            if (token[0] == 'A')    return 2;   //Array i
-            if (token[0] == 'F')    return 3;   //Function i
-            if (token == "W03")     return 4;   //if
+            
+            if (state == 0) {
+                if (token == "") return 0;   // в стеке пусто
+                if (token == "R15") return 1;   //(
+                if (token[0] == 'A') return 2;   //Array i
+                if (token[0] == 'F') return 3;   //Function i
+                if (token == "W03") return 4;   //if
 
-            if (token.IndexOf("IF_m") >= 0) return 5;   //IF_mi
-            if (token.IndexOf("IF_m") >= 0) return 6;   //IF_mi+1 ?????????
-            if (token.IndexOf("Proc") >= 0) return 7;
-            if (token.IndexOf("DCL") >= 0) return 8;    //?
+                if (token.IndexOf("IF_m") >= 0) return 5;   //IF_mi
+                if (token.IndexOf("IF_m") >= 0) return 6;   //IF_mi+1 ?????????
+                if (token.IndexOf("Proc") >= 0) return 7;
+                if (token.IndexOf("DCL") >= 0) return 8;    //?
 
-            if (token == "W14" || token == "W15" || token == "W16" || token == "W17" || token == "W18")
-            {
-                return 9;   //тип (int,char)
+                if (token == "W14" || token == "W15" || token == "W16" || token == "W17" || token == "W18")
+                {
+                    return 9;   //тип (int,char)
+                }
+
+                if (token == "W02") return 10;  //end
+                if (token == "O00") return 11;  //:=
+                if (token == "W12") return 12;  //or
+                if (token == "W11") return 13;  //and
+                if (token == "W13") return 14;  //not
+
+                if (token == "O06" || token == "O07" || token == "O08" || token == "O09" || token == "O10" || token == "O11")
+                {
+                    return 15;  //сравнения
+                }
+
+                if (token == "O01" || token == "O02") return 16; // + -
+                if (token == "O03" || token == "O04") return 17; // * /
+                if (token == "O16") return 18;  // степень
+                if (token == "BP") return 19;  // Безусловный переход
+                if (token == "UPL") return 19;  //Условный переход ложный
             }
-
-            if (token == "W02") return 10;  //end
-            if (token == "O00") return 11;  //:=
-            if (token == "W12") return 12;  //or
-            if (token == "W11") return 13;  //and
-            if (token == "W13") return 14;  //not
-
-            if (token == "O06" || token == "O07" || token == "O08" || token == "O09" || token == "O10" || token == "O11")
+            if (state == 1)
             {
-                return 15;  //сравнения
+                if (token[0] == 'F') return 0;   //Function i 
+                else return 0;
             }
-
-            if (token == "O01" || token == "O02") return 16; // + -
-            if (token == "O03" || token == "O04") return 17; // * /
-            if (token == "O16") return 18;  // степень
-            if (token == "BP") return 19;  // Безусловный переход
-            if (token == "UPL") return 19;  //Условный переход ложный
-
             return 777;
            
         }
@@ -521,12 +545,12 @@ namespace TyAP
 
                     string lastInStack = stack.StackTokens.Count == 0 ? "" : stack.StackTokens.Last();          //Находим, что последнее в масиве, если ничего, то пустая строка
                  
-                    string move = getFindMoveForToken(whatLastInTheStack(lastInStack) , WhatIsToken(token[j])); //Поучаем данные из таблицы
+                    string move = getFindMoveForToken(whatLastInTheStack(lastInStack, state) , WhatIsToken(token[j], state)); //Поучаем данные из таблицы
 
                     List<string> ArrayMove = new List<string>(move.Split(','));         //Создаем Лист, в котором перечислены действия
                     while (ArrayMove.Count > 0)
                     {
-                        //textBoxOPZ.Text += ArrayMove[0]+"===";
+                        //textBoxOPZ.Text += ArrayMove[0]+"\n";
                         if (ArrayMove[0] == "Pop") stack.pop();
                         if (ArrayMove[0] == "Pop(X)") stack.pop(token[j]);
                         if (ArrayMove[0] == "Push")   stack.push(token[j]);
@@ -553,52 +577,59 @@ namespace TyAP
 
         }
 
-        private int WhatIsToken (string token)
+        private int WhatIsToken (string token, int state)
         {
             //ИФ СТАТЕ == 1 ТО ЧУТЬ ПО ДРУГОМУ ИСКАТЬ, ТО ЖЕ САМОЕ ДЛЯ ВЕРХНЕЙ ФУНКЦИИ
-            if ( token[0] == 'N')   return 0;   //N - число (N01)
-            if (token[0] == 'S')    return 1;   //S - Строка (S01)
-            if (token[0] == 'I' )   return 2;   //I - Переменная (I01)
-  
-            if (token == "R15")     return 3;   // (
-            if (token == "R16")     return 4;   // )
-
-            if (token == "R08")     return 5;   // ]
-            if (token == "R03")     return 6;   // ,
-            if (token == "R06")     return 7;   // ;
-            if (token == "W03")     return 8;   //if
-            if (token == "W05")     return 9;   //then
-            if (token == "W04")     return 10;  //else
-            if (token == "W08")     return 11;  //procedure
-            if (token == "W06")     return 12;  //var
-            if (token == "W02")     return 13;  //end
-
-            if (token == "W14" || token == "W15" || token == "W16" || token == "W17" || token == "W18" ) 
+            if (state == 0 )
             {
-                return 14;  //тип
+                if (token[0] == 'N') return 0;   //N - число (N01)
+                if (token[0] == 'S') return 1;   //S - Строка (S01)
+                if (token[0] == 'I') return 2;   //I - Переменная (I01)
+
+                if (token == "R15") return 3;   // (
+                if (token == "R16") return 4;   // )
+
+                if (token == "R08") return 5;   // ]
+                if (token == "R03") return 6;   // ,
+                if (token == "R06") return 7;   // ;
+                if (token == "W03") return 8;   //if
+                if (token == "W05") return 9;   //then
+                if (token == "W04") return 10;  //else
+                if (token == "W08") return 11;  //procedure
+                if (token == "W06") return 12;  //var
+                if (token == "W02") return 13;  //end
+
+                if (token == "W14" || token == "W15" || token == "W16" || token == "W17" || token == "W18")
+                {
+                    return 14;  //тип
+                }
+
+                if (token == "O00") return 15;  //:=
+                if (token == "W12") return 16;  //or
+                if (token == "W11") return 17;  //and
+                if (token == "W13") return 18;  //not
+
+                if (token == "O06" || token == "O07" || token == "O08" || token == "O09" || token == "O10" || token == "O11")
+                {
+                    return 19;  //отношения
+                }
+                if (token == "O01" || token == "O02") return 20;  //+ -
+                if (token == "O03" || token == "O04") return 21;  // * /
+
+                if (token == "O16") return 22;  // ^
+                if (token == "R04") return 23;  // .
+                if (token == "R05") return 24;  // :
+                if (token == "R07") return 25;  // [
+                if (token == "W10") return 26;  // GOTO
             }
-
-            if (token == "O00")     return 15;  //:=
-            if (token == "W12")     return 16;  //or
-            if (token == "W11")     return 17;  //and
-            if (token == "W13")     return 18;  //not
-
-            if (token == "O06" || token == "O07" || token == "O08" || token == "O09" || token == "O10" || token == "O11")
+            if (state == 1)
             {
-                return 19;  //отношения
+                if (token == "R16") return 0;   // )
+                if (token == "R15") return 1;   // (
+                if (token[0] == 'N' || token[0] == 'S' || token[0] == 'I') return 2;
+                else return 3;
             }
-            if (token == "O01" || token == "O02")   return 20;  //+ -
-            if (token == "O03" || token == "O04")   return 21;  // * /
-
-            if (token == "O16") return 22;  // ^
-            if (token == "R04") return 23;  // .
-            if (token == "R05") return 24;  // :
-            if (token == "R07") return 25;  // [
-            if (token == "W10") return 26;  // GOTO
-
-            else { return 777; 
-            }
-
+            return 404;
         }
         private int WhatIsIt(char parsbuff)
         {
