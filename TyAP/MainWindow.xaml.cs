@@ -25,7 +25,7 @@ namespace TyAP
         Dictionary<string, string> dictionary = new Dictionary<string, string>();
         const int m1 = 19, m2 = 15;
         const int s0m1 = 21, s0m2 = 27;
-        const int s1m1 = 2, s1m2 = 4;
+        const int s1m1 = 2, s1m2 = 5;
         string [,] MyMatrix  = new string [m1,m2];
         string[,] StateNull = new string[s0m1, s0m2];
         string[,] StateOne = new string[s1m1, s1m2];
@@ -307,7 +307,7 @@ namespace TyAP
             return MyMatrix[status, AnyLexem];
         }
 
-        string getFindMoveForToken(int whatLastInTheStack, int whatInTheStr, int state = 0)
+        string getFindMoveForToken(int whatLastInTheStack, int whatInTheStr, int state)
         {
             if (state == 0) return StateNull[whatLastInTheStack, whatInTheStr]; //большая таблица
             if (state == 1) return StateOne[whatLastInTheStack, whatInTheStr];  //маленькая таблица
@@ -518,12 +518,12 @@ namespace TyAP
                 if (token == "O03" || token == "O04") return 17; // * /
                 if (token == "O16") return 18;  // степень
                 if (token == "BP") return 19;  // Безусловный переход
-                if (token == "UPL") return 19;  //Условный переход ложный
+                if (token == "UPL") return 20;  //Условный переход ложный
             }
             if (state == 1)
             {
-                if (token[0] == 'F') return 0;   //Function i 
-                else return 0;
+                if (token != "" && token[0] == 'F') return 0;   //Function i 
+                else return 1;
             }
             return 777;
            
@@ -536,7 +536,6 @@ namespace TyAP
             string[] arrayBox = textBoxOutToken.Text.Split('\n');
             for (int i = 0; i < arrayBox.Length; i++)
             {
-                int state = stack.state;        // 0 или 1
                 buff = arrayBox[i];                             //считали первую строку
                 string[] token = buff.Split(' ');               //разбили её по пробелам на массив
                 for (int j = 0; j < token.Length; j++) {
@@ -545,7 +544,7 @@ namespace TyAP
 
                     string lastInStack = stack.StackTokens.Count == 0 ? "" : stack.StackTokens.Last();          //Находим, что последнее в масиве, если ничего, то пустая строка
                  
-                    string move = getFindMoveForToken(whatLastInTheStack(lastInStack, state) , WhatIsToken(token[j], state)); //Поучаем данные из таблицы
+                    string move = getFindMoveForToken(whatLastInTheStack(lastInStack, stack.state) , WhatIsToken(token[j], stack.state), stack.state); //Поучаем данные из таблицы
 
                     List<string> ArrayMove = new List<string>(move.Split(','));         //Создаем Лист, в котором перечислены действия
                     while (ArrayMove.Count > 0)
@@ -555,10 +554,14 @@ namespace TyAP
                         if (ArrayMove[0] == "Pop(X)")   stack.pop(token[j]);
                         if (ArrayMove[0] == "Push")     stack.push(token[j]);
                         if (ArrayMove[0] == "getOut")   stack.getOut();
-                        if(ArrayMove[0] == "Hold")      j--;
+                        if (ArrayMove[0] == "Hold")      j--;
+
+                        if (ArrayMove[0] == "State(1)")
+                            stack.state = 1;
+                        if (ArrayMove[0] == "State(0)") stack.state = 0;
 
 
-                         ArrayMove.RemoveAt(0);
+                        ArrayMove.RemoveAt(0);
 
                         /*
                          * x and y ;
@@ -636,8 +639,9 @@ namespace TyAP
             {
                 if (token == "R16") return 0;   // )
                 if (token == "R15") return 1;   // (
-                if (token[0] == 'N' || token[0] == 'S' || token[0] == 'I') return 2;
-                else return 3;
+                if (token == "R07") return 2;   // [
+                if (token[0] == 'N' || token[0] == 'S' || token[0] == 'I') return 3;
+                else return 4;
             }
             return 404;
         }
