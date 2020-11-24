@@ -1,3 +1,23 @@
-a>b <b>5<3> 5
+a>b <b>5<3> 5;
 a+b< 5 and 2-c=1 +q;
-(a+b[i+20,j])*c+d
+(a+b[i+20,j])*c+d;
+
+function fun;
+y-fun(x,z,y+2);
+
+R1:=A+B;
+GOTO M1;
+R2:=C*D-A;
+M1:
+
+
+
+function f(a,b:integer):integer;
+begin
+  f:= a+b;
+end;
+
+
+Стек
+
+Выход

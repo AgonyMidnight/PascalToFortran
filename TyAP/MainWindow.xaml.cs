@@ -557,20 +557,19 @@ namespace TyAP
                     while (ArrayMove.Count > 0)
                     {
                         //textBoxOPZ.Text += ArrayMove[0]+"\n";
-                        if (ArrayMove[0] == "Pop")      stack.pop();
-                        if (ArrayMove[0] == "Pop(X)")   stack.pop(token[j]);
+                        if (ArrayMove[0] == "Pop")          stack.pop();
+                        if (ArrayMove[0] == "Pop(X)")       stack.pop(token[j]);
 
-                        if (ArrayMove[0] == "Push")     stack.push(token[j]);
-                        if (ArrayMove[0] == "Push(2A)") stack.push("АЭМ"+ countAEM.ToString());
+                        if (ArrayMove[0] == "Push")         stack.push(token[j]);
+                        if (ArrayMove[0] == "Push(2A)")     stack.push("АЭМ"+ countAEM.ToString());
 
-                        if (ArrayMove[0] == "Swap(i+1_A)") stack.swap("АЭМ" + (++countAEM).ToString());
+                        if (ArrayMove[0] == "Swap(i+1_A)")  stack.swap("АЭМ" + (++countAEM).ToString());
 
-                        if (ArrayMove[0] == "getOut")   stack.getOut();
-                        if (ArrayMove[0] == "Hold")      j--;
+                        if (ArrayMove[0] == "getOut")       stack.getOut();
+                        if (ArrayMove[0] == "Hold")         j--;
 
-                        if (ArrayMove[0] == "State(1)")
-                            stack.state = 1;
-                        if (ArrayMove[0] == "State(0)") stack.state = 0;
+                        if (ArrayMove[0] == "State(1)")     stack.state = 1;
+                        if (ArrayMove[0] == "State(0)")     stack.state = 0;
 
 
                         ArrayMove.RemoveAt(0);
