@@ -24,7 +24,7 @@ namespace TyAP
     {
         Dictionary<string, string> dictionary = new Dictionary<string, string>();
         const int m1 = 19, m2 = 15;
-        const int s0m1 = 19, s0m2 = 25;
+        const int s0m1 = 21, s0m2 = 27;
         string [,] MyMatrix  = new string [m1,m2];
         string[,] StateNull = new string[s0m1, s0m2];
         int countIdentity = 20;
@@ -290,9 +290,11 @@ namespace TyAP
             return MyMatrix[status, AnyLexem];
         }
 
-        string getFindMoveForToken(int Token, int state)
+        string getFindMoveForToken(int whatLastInTheStack, int whatInTheStr, int state = 0)
         {
-            return StateNull[state, Token];
+            if (state == 0) return StateNull[whatLastInTheStack, whatInTheStr]; //большая таблица
+            if (state == 1) return "пока не реализованно";                      //маленькая таблица
+            else return "Ошибка, состояние может быть только 0 или 1";
         }
 
         void setF()
@@ -313,11 +315,6 @@ namespace TyAP
                 int mystr = 0;
                 for (int j = 0; j < buff.Length ; j++) // || parsBuff != ""
                 {
-                    
-                    if(j == 7)
-                    {
-                        ;
-                    }
                     move = getFindDecision(WhatIsIt(buff[j]), status);
                     if ((move.Length <= 2) && (move != "F") && (move != "Z"))
                     {
@@ -385,7 +382,6 @@ namespace TyAP
                         }
                         else if (secondParsMove == "P3")
                         {
-                            /////ПРОВЕРИТЬ!!!!!111111111!!!!!!!!!!!!!!!ВАЖНААА!ааАААаааа!!11111ОДИН!!!АДЫН!!!!
                             if (firstParsMove == "15")
                             {   //исправлени косяка с 7.
                                 parsBuff = parsBuff.Substring(0, parsBuff.Length - 1);//????
@@ -466,81 +462,42 @@ namespace TyAP
         {
 
         }
-        int getState(string token)
+        int whatLastInTheStack(string token)
         {
-            if (token == "R15")
-            {
-                return 1;
-            }
-            if (token == "iA")
-            {
-                return 2;
-            }
-            if (token[0] == 'F')
-            {
-                return 3;
-            }
-            if (token == "W03")
-            {
-                return 4;
-            }
-            if (token[0] == 'I' && token[1] == 'F' && token[2] == 'M') 
-            {
-                return 5;
-            }
-            if (token[0] == 'I' && token[1] == 'F' && token[2] == 'M') //+1
-            {
-                return 6;
-            }
-            if (token[0] == 'P' && token[1] == 'R' && token[2] == 'O')
-            {
-                return 7;
-            }
-            if (token[0] == 'D' && token[1] == 'C' && token[2] == 'L')
-            {
-                return 8;
-            }
+            if (token == "")        return 0;   // в стеке пусто
+            if (token == "R15")     return 1;   //(
+            if (token[0] == 'A')    return 2;   //Array i
+            if (token[0] == 'F')    return 3;   //Function i
+            if (token == "W03")     return 4;   //if
+
+            if (token.IndexOf("IF_m") >= 0) return 5;   //IF_mi
+            if (token.IndexOf("IF_m") >= 0) return 6;   //IF_mi+1 ?????????
+            if (token.IndexOf("Proc") >= 0) return 7;
+            if (token.IndexOf("DCL") >= 0) return 8;    //?
+
             if (token == "W14" || token == "W15" || token == "W16" || token == "W17" || token == "W18")
             {
-                return 9;
+                return 9;   //тип (int,char)
             }
-            if (token == "W02") //end
-            {
-                return 10;
-            }
-            if (token == "O00")
-            {
-                return 11;
-            }
-            if (token == "W12")
-            {
-                return 12;
-            }
-            if (token == "W11")
-            {
-                return 13;
-            }
-            if (token == "W13")
-            {
-                return 14;
-            }
+
+            if (token == "W02") return 10;  //end
+            if (token == "O00") return 11;  //:=
+            if (token == "W12") return 12;  //or
+            if (token == "W11") return 13;  //and
+            if (token == "W13") return 14;  //not
+
             if (token == "O06" || token == "O07" || token == "O08" || token == "O09" || token == "O10" || token == "O11")
             {
-                return 15;
+                return 15;  //сравнения
             }
-            if (token == "O01" || token == "O02")
-            {
-                return 16;
-            }
-            if (token == "O03" || token == "O04")
-            {
-                return 17;
-            }
-            if (token == "O16")
-            {
-                return 18;
-            }
-            else { return 777; }
+
+            if (token == "O01" || token == "O02") return 16; // + -
+            if (token == "O03" || token == "O04") return 17; // * /
+            if (token == "O16") return 18;  // степень
+            if (token == "BP") return 19;  // Безусловный переход
+            if (token == "UPL") return 19;  //Условный переход ложный
+
+            return 777;
            
         }
         /*******************************        2 LABA                                    ************************************************/
@@ -551,45 +508,36 @@ namespace TyAP
             string[] arrayBox = textBoxOutToken.Text.Split('\n');
             for (int i = 0; i < arrayBox.Length; i++)
             {
-                int state = 0;
-                buff = arrayBox[i];
-                string[] token = buff.Split(' ');
+                int state = stack.state;        // 0 или 1
+                buff = arrayBox[i];                             //считали первую строку
+                string[] token = buff.Split(' ');               //разбили её по пробелам на массив
                 for (int j = 0; j < token.Length; j++) {
-                    if (token[j] == "" || token[j] == "\n" || token[j] == " " || token[j] == "\r") continue;
-                    if(stack.StackTokens.Count == 0) { state = 0; }
-                    else
-                    {
-                        getState(stack.StackTokens.Last());
-                    }
-                    string move = getFindMoveForToken(WhatIsToken(token[j]), state);
-                    string[] ArrayMove = move.Split(',');
-                    if (ArrayMove.Length == 1)
-                    {
-                        if (ArrayMove[0] == "Push")
-                        {
-                            stack.push(token[j]);
-                        }
-                    }
-                    if (ArrayMove.Length == 2)
-                    {
+                    token[j] = token[j].Replace("\r", "");          //Удалили в элементе все лишнее
+                    if (token[j] == "" || token[j] == "\n" || token[j] == " " || token[j] == "\r") continue;    //Если там был пробел, то ничего не надо делать
 
-                    }
-                    if (ArrayMove.Length == 3)
-                    {
+                    string lastInStack = stack.StackTokens.Count == 0 ? "" : stack.StackTokens.Last();          //Находим, что последнее в масиве, если ничего, то пустая строка
+                 
+                    string move = getFindMoveForToken(whatLastInTheStack(lastInStack) , WhatIsToken(token[j])); //Поучаем данные из таблицы
 
+                    List<string> ArrayMove = new List<string>(move.Split(','));         //Создаем Лист, в котором перечислены действия
+                    while (ArrayMove.Count > 0)
+                    {
+                        //textBoxOPZ.Text += ArrayMove[0]+"===";
+                        if (ArrayMove[0] == "Pop") stack.pop();
+                        if (ArrayMove[0] == "Pop(X)") stack.pop(token[j]);
+                        if (ArrayMove[0] == "Push")   stack.push(token[j]);
+
+                        ArrayMove.RemoveAt(0);
+
+                        //State(1) === Pop(X) === Push === Pop(X) === N ===
                     }
-                }
+                 }
             }
-        
-        // || parsBuff != ""
-
-            /*string g = StateNull[1, 3];
-            stack.push(g);
-            stack.pop();
-            stack.OutString.ForEach(delegate (string value)
-           {
-               textBoxOPZ.Text = textBoxOPZ.Text + value + "   ";
-           });*/
+            foreach (string str in stack.OutString)
+            {
+                textBoxOPZ.Text += str;
+            }
+            
 
         }
 
@@ -600,106 +548,47 @@ namespace TyAP
 
         private int WhatIsToken (string token)
         {
-            if ( token[0] == 'N' || token[0]== 'S')
-            {
-                return 0;
-            }
-            if (token[0] == 'I' )
-            {
-                return 1;
-            }
-            if (token == "R15")
-            {
-                return 2;
-            }
-            if (token == "R16")
-            {
-                return 3;
-            }
-            if (token == "R08")
-            {
-                return 4;
-            }
-            if (token == "R03")
-            {
-                return 5;
-            }
-            if (token == "R06")
-            {
-                return 6;
-            }
-            if (token == "W03")
-            {
-                return 7;
-            }
-            if (token == "W05")
-            {
-                return 8;
-            }
-            if (token == "W04")
-            {
-                return 9;
-            }
-            if (token == "W08")
-            {
-                return 10;
-            }
-            if (token == "W06")
-            {
-                return 11;
-            }
-            if (token == "W02")
-            {
-                return 12;
-            }
+            //ИФ СТАТЕ == 1 ТО ЧУТЬ ПО ДРУГОМУ ИСКАТЬ, ТО ЖЕ САМОЕ ДЛЯ ВЕРХНЕЙ ФУНКЦИИ
+            if ( token[0] == 'N')   return 0;   //N - число (N01)
+            if (token[0] == 'S')    return 1;   //S - Строка (S01)
+            if (token[0] == 'I' )   return 2;   //I - Переменная (I01)
+  
+            if (token == "R15")     return 3;   // (
+            if (token == "R16")     return 4;   // )
+
+            if (token == "R08")     return 5;   // ]
+            if (token == "R03")     return 6;   // ,
+            if (token == "R06")     return 7;   // ;
+            if (token == "W03")     return 8;   //if
+            if (token == "W05")     return 9;   //then
+            if (token == "W04")     return 10;  //else
+            if (token == "W08")     return 11;  //procedure
+            if (token == "W06")     return 12;  //var
+            if (token == "W02")     return 13;  //end
+
             if (token == "W14" || token == "W15" || token == "W16" || token == "W17" || token == "W18" ) 
             {
-                return 13;
+                return 14;  //тип
             }
-            if (token == "O00")
-            {
-                return 14;
-            }
-            if (token == "W12")
-            {
-                return 15;
-            }
-            if (token == "W11")
-            {
-                return 16;
-            }
-            if (token == "W13")
-            {
-                return 17;
-            }
+
+            if (token == "O00")     return 15;  //:=
+            if (token == "W12")     return 16;  //or
+            if (token == "W11")     return 17;  //and
+            if (token == "W13")     return 18;  //not
+
             if (token == "O06" || token == "O07" || token == "O08" || token == "O09" || token == "O10" || token == "O11")
             {
-                return 18;
+                return 19;  //отношения
             }
-            if (token == "O01" || token == "O02")
-            {
-                return 19;
-            }
-            if (token == "O03" || token == "O04")
-            {
-                return 20;
-            }
-            if (token == "O16")
-            {
-                return 21;
-            }
-            if (token == "R04")
-            {
-                return 22;
-            }
-            if (token == "R05")
-            {
-                return 23;
-            }
-            if (token == "R07")
-            {
-                return 24;
-            }
+            if (token == "O01" || token == "O02")   return 20;  //+ -
+            if (token == "O03" || token == "O04")   return 21;  // * /
+
+            if (token == "O16") return 22;  // ^
+            if (token == "R04") return 23;  // .
+            if (token == "R05") return 24;  // :
+            if (token == "R07") return 25;  // [
+            if (token == "W10") return 26;  // GOTO
+
             else { return 777; 
             }
 
