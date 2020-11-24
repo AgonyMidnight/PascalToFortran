@@ -57,54 +57,56 @@ namespace TyAP
 
         class Stack
         {
-            public List<string> StackTokens = new List<string>();
-            public int state = 0;
-            public List<string> OutString = new List<string>();
-            public int countStack = 0;
-            public int countM = 1;
-            public int countNum = 1;
-            public int countFunc = 1;
+            public List<string> StackTokens = new List<string>();   //Стек
+            public int countStack = 0;                              //Размер стека   
+
+            public int state = 0;                                   //Состояние
+            public List<string> OutString = new List<string>();     //Выходная строка           
+            public int countM = 1;      //счетчик меток
+            public int countNum = 1;    //счетчик числен
+            public int countFunc = 1;   //счетчик функций
 
 
             public Stack(){
 
             }
-            public void pop(string x = null) //вых
+
+            //Указанный элемент (Вершина стека) в выхоодную строку
+            public void pop(string temp = null) 
             {
-                string temp = StackTokens[countStack - 1];//&&&&&&&&&&&&
-                StackTokens.RemoveAt(countStack-1);
-                countStack--;
-                getOut(temp);
+                OutString.Add(temp ?? StackTokens[countStack - 1]);
             }
       
-            public void setState()
+            public void setState(int s)
             {
-
+                state = s;
             }
 
-            public void push(string temp) //вт
+            //Указанные (из входной строки) в вершину стека
+            public void push(string temp) 
             {
                 StackTokens.Add(temp);
                 countStack++;
             }
-            public void getOut (string temp)  //выт
+
+            //Удалить последний в стеке элемент
+            public void getOut ()  
             {
-                OutString.Add(temp);
-            }
-            public void showTokenOPZ()
-            {
-               
+                StackTokens.RemoveAt(countStack - 1);
+                countStack--;
             }
 
+            //Заменить элемент в вершине стека на Указанный
+            public void swap(string temp)  
+            {
+                StackTokens[countStack - 1] = temp;
+            }
         }
 
         public MainWindow()
         {
             InitializeComponent();
-
             Begin();
-            
-
         }
 
         private void Begin()
@@ -462,13 +464,26 @@ namespace TyAP
         private void Button_ClickLR1(object sender, RoutedEventArgs e)
         {
             Stack stack = new Stack();
-            string g = StateNull[1, 3];
+            string[] arrayBox = textBoxOutToken.Text.Split('\n');
+            for (int i = 0; i < arrayBox.Length; i++)
+            {
+                buff = arrayBox[i];
+                string[] token = buff.Split(' ');
+                for (int j = 0; j < token.Length; j++) {
+                    textBoxOPZ.Text += token[j]+"<>";
+
+             }
+        }
+        
+        // || parsBuff != ""
+
+            /*string g = StateNull[1, 3];
             stack.push(g);
             stack.pop();
             stack.OutString.ForEach(delegate (string value)
            {
                textBoxOPZ.Text = textBoxOPZ.Text + value + "   ";
-           });
+           });*/
 
         }
 
