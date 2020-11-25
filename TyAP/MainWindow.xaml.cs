@@ -25,7 +25,7 @@ namespace TyAP
         Dictionary<string, string> dictionary = new Dictionary<string, string>();
         const int m1 = 19, m2 = 15;
         const int s0m1 = 21, s0m2 = 27;
-        const int s1m1 = 2, s1m2 = 5;
+        const int s1m1 = 2, s1m2 = 6;
         string [,] MyMatrix  = new string [m1,m2];
         string[,] StateNull = new string[s0m1, s0m2];
         string[,] StateOne = new string[s1m1, s1m2];
@@ -542,6 +542,8 @@ namespace TyAP
                 string[] token = buff.Split(' ');               //разбили её по пробелам на массив
 
                 int countAEM = 2;
+                int countBegin = 0;
+                int countBeginLevel = 0;
 
                 for (int j = 0; j < token.Length; j++) {
                     token[j] = token[j].Replace("\r", "");          //Удалили в элементе все лишнее
@@ -559,17 +561,22 @@ namespace TyAP
                         //textBoxOPZ.Text += ArrayMove[0]+"\n";
                         if (ArrayMove[0] == "Pop")          stack.pop();
                         if (ArrayMove[0] == "Pop(X)")       stack.pop(token[j]);
+                        if (ArrayMove[0] == "Pop(:)")       stack.pop(":"); 
+                        if (ArrayMove[0] == "Pop(KP)")      stack.pop("КП");    //конец процедуры (программы)
+                        if (ArrayMove[0] == "Pop(i_j_NP)")  stack.pop("НП_" + (++countBegin) + "_" + (++countBeginLevel));
 
                         if (ArrayMove[0] == "Push")         stack.push(token[j]);
-                        if (ArrayMove[0] == "Push(2A)")     stack.push("АЭМ"+ countAEM.ToString());
+                        if (ArrayMove[0] == "Push(2A)")     stack.push("АЭМ_"+ countAEM);
 
-                        if (ArrayMove[0] == "Swap(i+1_A)")  stack.swap("АЭМ" + (++countAEM).ToString());
+                        if (ArrayMove[0] == "Swap(i+1_A)")  stack.swap("АЭМ_" + (++countAEM));
 
                         if (ArrayMove[0] == "getOut")       stack.getOut();
                         if (ArrayMove[0] == "Hold")         j--;
 
                         if (ArrayMove[0] == "State(1)")     stack.state = 1;
                         if (ArrayMove[0] == "State(0)")     stack.state = 0;
+
+                        
 
 
 
@@ -611,7 +618,7 @@ namespace TyAP
                 if (token == "W03") return 8;   //if
                 if (token == "W05") return 9;   //then
                 if (token == "W04") return 10;  //else
-                if (token == "W08") return 11;  //procedure
+                if (token == "W01") return 11;  //begin
                 if (token == "W06") return 12;  //var
                 if (token == "W02") return 13;  //end
 
@@ -644,7 +651,8 @@ namespace TyAP
                 if (token == "R15") return 1;   // (
                 if (token == "R07") return 2;   // [
                 if (token[0] == 'N' || token[0] == 'S' || token[0] == 'I') return 3;
-                else return 4;
+                if (token == "R05") return 4;
+                else return 5;
             }
             return 404;
         }

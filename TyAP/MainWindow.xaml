@@ -17,7 +17,7 @@
                 <GradientStop Color="#FF2CBDE8" Offset="0.017"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <TextBox x:Name="textBoxInput" HorizontalAlignment="Left" Height="310" Margin="19,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="213" VerticalScrollBarVisibility="Visible" AcceptsReturn="True" Text="c1:&#xD;&#xA;end." TextChanged="TextBoxInput_TextChanged"  />
+        <TextBox x:Name="textBoxInput" HorizontalAlignment="Left" Height="310" Margin="19,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="213" VerticalScrollBarVisibility="Visible" AcceptsReturn="True" Text="f:= a+b;" TextChanged="TextBoxInput_TextChanged"  />
         <Label x:Name="label1" Content="Введите необходимый код на Pascal " HorizontalAlignment="Left" Margin="19,10,0,0" VerticalAlignment="Top" Height="26" Width="213"/>
         <Button Content="" HorizontalAlignment="Left" Margin="248,182,0,0" VerticalAlignment="Top" Width="63" Height="54" Click="Button_Click">
             <Button.Background>
