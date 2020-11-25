@@ -567,9 +567,8 @@ namespace TyAP
                  
                     string move = getFindMoveForToken(whatLastInTheStack(lastInStack, stack.state) , WhatIsToken(token[j], stack.state), stack.state); //Поучаем данные из таблицы
 
-                    List<string> ArrayMove = new List<string>(move.Split(','));         //Создаем Лист, в котором перечислены действия
 
-                    
+                    List<string> ArrayMove = new List<string>(move.Split(','));         //Создаем Лист, в котором перечислены действия
  
                     while (ArrayMove.Count > 0)
                     {
@@ -595,12 +594,16 @@ namespace TyAP
                         if (ArrayMove[0] == "Swap(G)")      stack.swap(token[j]);
                         if (ArrayMove[0] == "Swap(Mi_IF)")  stack.swap("IF_M_" + countUPL);
                         if (ArrayMove[0] == "Swap(Mi+1_IF)") stack.swap("М_" + countUPL+1 + "_:");
+                        if (ArrayMove[0] == "Swap(i+1_F)")  stack.swap("F_" + (++countFuntion));
 
                         if (ArrayMove[0] == "getOut")       stack.getOut();
                         if (ArrayMove[0] == "Hold")         j--;
 
                         if (ArrayMove[0] == "State(1)")     stack.state = 1;
                         if (ArrayMove[0] == "State(0)")     stack.state = 0;
+
+                        if (ArrayMove[0] == "endF")
+                            countFuntion = 1;
 
 
                         //, Swap(Mi+1_IF)
