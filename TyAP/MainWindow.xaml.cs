@@ -557,7 +557,7 @@ namespace TyAP
                 buff = arrayBox[i];                             //считали первую строку
                 string[] token = buff.Split(' ');               //разбили её по пробелам на массив
 
-                int countFuntion = 1;
+                int countFuntion = 0;
 
                 for (int j = 0; j < token.Length; j++) {
                     token[j] = token[j].Replace("\r", "");          //Удалили в элементе все лишнее
@@ -590,11 +590,13 @@ namespace TyAP
                         if (ArrayMove[0] == "Push(IF)")     stack.push("IF");
                         if (ArrayMove[0] == "Push(1F)")     stack.push("F_"+(++countFuntion));
 
+
                         if (ArrayMove[0] == "Swap(i+1_A)")  stack.swap("АЭМ_" + (++countAEM));
                         if (ArrayMove[0] == "Swap(G)")      stack.swap(token[j]);
                         if (ArrayMove[0] == "Swap(Mi_IF)")  stack.swap("IF_M_" + countUPL);
                         if (ArrayMove[0] == "Swap(Mi+1_IF)") stack.swap("М_" + countUPL+1 + "_:");
                         if (ArrayMove[0] == "Swap(i+1_F)")  stack.swap("F_" + (++countFuntion));
+                        if (ArrayMove[0] == "Swap(2F)")     stack.swap("F_" + (++countFuntion));
 
                         if (ArrayMove[0] == "getOut")       stack.getOut();
                         if (ArrayMove[0] == "Hold")         j--;
@@ -603,12 +605,14 @@ namespace TyAP
                         if (ArrayMove[0] == "State(0)")     stack.state = 0;
 
                         if (ArrayMove[0] == "endF")
-                            countFuntion = 1;
+                        {
+                            countFuntion = 0;
+                        }
 
 
-                        //, Swap(Mi+1_IF)
+                            //, Swap(Mi+1_IF)
 
-                        ArrayMove.RemoveAt(0);
+                            ArrayMove.RemoveAt(0);
 
                     }
                     //textBoxOPZ.Text += "\n======\n";

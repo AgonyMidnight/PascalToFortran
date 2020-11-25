@@ -1,22 +1,25 @@
-a>b <b>5<3> 5;
-a+b< 5 and 2-c=1 +q;
+2.1
+(a+d)/c+b*(e+d);
+
+2.2
+a+b< -5 and 2-c=1 +q;
+
+2.3
 (a+b[i+20,j])*c+d;
 
-function fun;
+2.4
 y-fun(x,z,y+2);
 
+2.5
+x:= f(x);
+
+2.6
 R1:=A+B;
 GOTO M1;
 R2:=C*D-A;
 M1:
 
-
-function f(a,b:integer):integer;
-begin
-  f:= a+b;
-end;
-
-
+2.7
 if a>b
  then
 begin
