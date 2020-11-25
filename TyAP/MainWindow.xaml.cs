@@ -493,9 +493,9 @@ namespace TyAP
                 if (token == "R15") return 1;   //(
                 if (token[0] == 'А' && token[1] == 'Э' && token[2] == 'М') return 2;   //Array i
                 if (token[0] == 'F') return 3;   //Function i
-                if (token == "W03") return 4;   //if
+                if (token == "IF") return 4;   //if
 
-                if (token.IndexOf("IF_m") >= 0) return 5;   //IF_mi
+                if (token.IndexOf("IF_M_") >= 0) return 5;   //IF_mi  (IF_M_1)
                 if (token.IndexOf("IF_m") >= 0) return 6;   //IF_mi+1 ?????????
                 if (token.IndexOf("Proc") >= 0) return 7;
                 if (token.IndexOf("DCL") >= 0) return 8;    //?
@@ -537,14 +537,17 @@ namespace TyAP
             Stack stack = new Stack();
           
             string[] arrayBox = textBoxOutToken.Text.Split('\n');
+            int countAEM = 2;
+            int countBegin = 0;
+            int countBeginLevel = 0;
+            int countUPL = 0;
+
             for (int i = 0; i < arrayBox.Length; i++)
             {
                 buff = arrayBox[i];                             //считали первую строку
                 string[] token = buff.Split(' ');               //разбили её по пробелам на массив
 
-                int countAEM = 2;
-                int countBegin = 0;
-                int countBeginLevel = 0;
+                
 
                 for (int j = 0; j < token.Length; j++) {
                     token[j] = token[j].Replace("\r", "");          //Удалили в элементе все лишнее
@@ -557,32 +560,39 @@ namespace TyAP
                     List<string> ArrayMove = new List<string>(move.Split(','));         //Создаем Лист, в котором перечислены действия
 
                     
+ 
                     while (ArrayMove.Count > 0)
                     {
                         //textBoxOPZ.Text += ArrayMove[0]+"\n";
                         if (ArrayMove[0] == "Pop")          stack.pop();
                         if (ArrayMove[0] == "Pop(X)")       stack.pop(token[j]);
-                        if (ArrayMove[0] == "Pop(:)")       stack.pop(":"); 
+                        if (ArrayMove[0] == "Pop(:)")       stack.pop(":");
+                        if (ArrayMove[0] == "Pop(NP)")      stack.pop("НП");    //конец процедуры (программы)
                         if (ArrayMove[0] == "Pop(KP)")      stack.pop("КП");    //конец процедуры (программы)
                         if (ArrayMove[0] == "Pop(i_j_NP)")  stack.pop("НП_" + (++countBegin) + "_" + (++countBeginLevel));
                         if (ArrayMove[0] == "Pop(BP)")      stack.pop("БП");
+                        if (ArrayMove[0] == "Pop(Mi_UPL)")  stack.pop("УПЛ_М"+(++countUPL));
+                        if (ArrayMove[0] == "Pop(Mi+1_BP_Mi:)") stack.pop("М_" + (++countUPL) + "_БП_М_"+ (countUPL-1) + "_:");
+                        if (ArrayMove[0] == "Pop(Mi:)")     stack.pop("М_" + countUPL+"_:");
 
-                        if (ArrayMove[0] == "Push")         stack.push(token[j]);
+                            if (ArrayMove[0] == "Push")         stack.push(token[j]);
                         if (ArrayMove[0] == "Push(2A)")     stack.push("АЭМ_"+ countAEM);
                         if (ArrayMove[0] == "Push(GOTO)")   stack.push("GOTO");
+                        if (ArrayMove[0] == "Push(IF)")     stack.push("IF");
 
                         if (ArrayMove[0] == "Swap(i+1_A)")  stack.swap("АЭМ_" + (++countAEM));
                         if (ArrayMove[0] == "Swap(G)")      stack.swap(token[j]);
+                        if (ArrayMove[0] == "Swap(Mi_IF)")  stack.swap("IF_M_" + countUPL);
+                        if (ArrayMove[0] == "Swap(Mi+1_IF)") stack.swap("М_" + countUPL+1 + "_:");
 
-                            if (ArrayMove[0] == "getOut")   stack.getOut();
+                        if (ArrayMove[0] == "getOut")       stack.getOut();
                         if (ArrayMove[0] == "Hold")         j--;
 
                         if (ArrayMove[0] == "State(1)")     stack.state = 1;
                         if (ArrayMove[0] == "State(0)")     stack.state = 0;
 
-                        
 
-
+                        //, Swap(Mi+1_IF)
 
                         ArrayMove.RemoveAt(0);
 
