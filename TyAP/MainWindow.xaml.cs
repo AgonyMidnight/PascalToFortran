@@ -24,7 +24,7 @@ namespace TyAP
     {
         Dictionary<string, string> dictionary = new Dictionary<string, string>();
         const int m1 = 19, m2 = 15;
-        const int s0m1 = 23, s0m2 = 29;
+        const int s0m1 = 24, s0m2 = 30;
         const int s1m1 = 2, s1m2 = 6;
         string [,] MyMatrix  = new string [m1,m2];
         string[,] StateNull = new string[s0m1, s0m2];
@@ -529,8 +529,9 @@ namespace TyAP
                 if (token == "O16") return 18;  // степень
                 if (token == "БП") return 19;  // Безусловный переход
                 if (token == "УПЛ") return 20;  //Условный переход ложный
-                if (token == "GOTO") return 21;  //Условный переход ложный
-                if (token == "W00") return 22;  //Условный переход ложный
+                if (token == "GOTO") return 21;  
+                if (token == "W00") return 22;  //program
+                if (token[0] == 'V') return 23;  //var
             }
             if (state == 1)
             {
@@ -538,7 +539,6 @@ namespace TyAP
                 else return 1;
             }
             return 777;
-           
         }
         /*******************************        2 LABA                                    ************************************************/
         private void Button_ClickLR1(object sender, RoutedEventArgs e)
@@ -551,6 +551,7 @@ namespace TyAP
             int countBeginLevel = 0;
             int countUPL = 0;
             
+            
 
             for (int i = 0; i < arrayBox.Length; i++)
             {
@@ -558,6 +559,7 @@ namespace TyAP
                 string[] token = buff.Split(' ');               //разбили её по пробелам на массив
 
                 int countFuntion = 0;
+                int countVar = 0;
 
                 for (int j = 0; j < token.Length; j++) {
                     token[j] = token[j].Replace("\r", "");          //Удалили в элементе все лишнее
@@ -589,6 +591,7 @@ namespace TyAP
                         if (ArrayMove[0] == "Push(GOTO)")   stack.push("GOTO");
                         if (ArrayMove[0] == "Push(IF)")     stack.push("IF");
                         if (ArrayMove[0] == "Push(1F)")     stack.push("F_"+(++countFuntion));
+                        if (ArrayMove[0] == "Push(perem_0)")stack.push("V_" + (++countVar));//////////////////////
 
 
                         if (ArrayMove[0] == "Swap(i+1_A)")  stack.swap("АЭМ_" + (++countAEM));
@@ -597,6 +600,7 @@ namespace TyAP
                         if (ArrayMove[0] == "Swap(Mi+1_IF)") stack.swap("М_" + countUPL+1 + "_:");
                         if (ArrayMove[0] == "Swap(i+1_F)")  stack.swap("F_" + (++countFuntion));
                         if (ArrayMove[0] == "Swap(2F)")     stack.swap("F_" + (++countFuntion));
+                        if (ArrayMove[0] == "Swap(perem_i+1)") stack.swap("V_" + (++countVar));
 
                         if (ArrayMove[0] == "getOut")       stack.getOut();
                         if (ArrayMove[0] == "Hold")         j--;
@@ -604,15 +608,11 @@ namespace TyAP
                         if (ArrayMove[0] == "State(1)")     stack.state = 1;
                         if (ArrayMove[0] == "State(0)")     stack.state = 0;
 
-                        if (ArrayMove[0] == "endF")
-                        {
-                            countFuntion = 0;
-                        }
+                        if (ArrayMove[0] == "endF")         countFuntion = 0;
+                        if (ArrayMove[0] == "endType")      countVar = 0;
+                        
 
-
-                            //, Swap(Mi+1_IF)
-
-                            ArrayMove.RemoveAt(0);
+                        ArrayMove.RemoveAt(0);
 
                     }
                     //textBoxOPZ.Text += "\n======\n";
@@ -651,7 +651,7 @@ namespace TyAP
                 if (token == "W05") return 9;   //then
                 if (token == "W04") return 10;  //else
                 if (token == "W01") return 11;  //begin
-                if (token == "W06") return 12;  //var
+                if (token == "???") return 12;  //???
                 if (token == "W02") return 13;  //end
 
                 if (token == "W14" || token == "W15" || token == "W16" || token == "W17" || token == "W18")
@@ -677,7 +677,8 @@ namespace TyAP
                 if (token == "R07") return 25;  // [
                 if (token == "W10") return 26;  // GOTO
                 if (token[0] == 'G') return 27;  // Метка (G1)
-                if (token == "W00") return 28;  //Условный переход ложный
+                if (token == "W00") return 28;  //program
+                if (token == "W06") return 29;  //var
             }
             if (state == 1)
             {

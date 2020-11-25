@@ -27,3 +27,6 @@ begin
  else
    z:=y;
 end;
+
+2.7
+var a,b,c :real;
