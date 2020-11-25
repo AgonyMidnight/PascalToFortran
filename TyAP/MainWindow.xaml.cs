@@ -24,7 +24,7 @@ namespace TyAP
     {
         Dictionary<string, string> dictionary = new Dictionary<string, string>();
         const int m1 = 19, m2 = 15;
-        const int s0m1 = 22, s0m2 = 28;
+        const int s0m1 = 23, s0m2 = 29;
         const int s1m1 = 2, s1m2 = 6;
         string [,] MyMatrix  = new string [m1,m2];
         string[,] StateNull = new string[s0m1, s0m2];
@@ -207,10 +207,18 @@ namespace TyAP
         }
         private void Add_String_Const (string temp)
         {
-            dictionary.Add(temp, "S" + countStringConst.ToString());
-            countStringConst++;
-            textBoxOutToken.Text = textBoxOutToken.Text + " " + dictionary[temp];
-            textBoxUseToken.Text = textBoxUseToken.Text + temp + "     " + dictionary[temp] + "\r\n";
+            
+            try
+            {
+                dictionary.Add(temp, "S" + countStringConst.ToString());
+                countStringConst++;
+                textBoxOutToken.Text = textBoxOutToken.Text + " " + dictionary[temp];
+                textBoxUseToken.Text = textBoxUseToken.Text + temp + "     " + dictionary[temp] + "\r\n";
+            } catch (Exception e)
+            {
+                textBoxOutToken.Text = textBoxOutToken.Text + " " + dictionary[temp];
+                textBoxUseToken.Text = textBoxUseToken.Text + temp + "     " + dictionary[temp] + "\r\n";
+            }
         }
         private void getP_Two (string parsbuff)
         {
@@ -522,6 +530,7 @@ namespace TyAP
                 if (token == "БП") return 19;  // Безусловный переход
                 if (token == "УПЛ") return 20;  //Условный переход ложный
                 if (token == "GOTO") return 21;  //Условный переход ложный
+                if (token == "W00") return 22;  //Условный переход ложный
             }
             if (state == 1)
             {
@@ -541,13 +550,14 @@ namespace TyAP
             int countBegin = 0;
             int countBeginLevel = 0;
             int countUPL = 0;
+            
 
             for (int i = 0; i < arrayBox.Length; i++)
             {
                 buff = arrayBox[i];                             //считали первую строку
                 string[] token = buff.Split(' ');               //разбили её по пробелам на массив
 
-                
+                int countFuntion = 1;
 
                 for (int j = 0; j < token.Length; j++) {
                     token[j] = token[j].Replace("\r", "");          //Удалили в элементе все лишнее
@@ -575,10 +585,11 @@ namespace TyAP
                         if (ArrayMove[0] == "Pop(Mi+1_BP_Mi:)") stack.pop("М_" + (++countUPL) + "_БП_М_"+ (countUPL-1) + "_:");
                         if (ArrayMove[0] == "Pop(Mi:)")     stack.pop("М_" + countUPL+"_:");
 
-                            if (ArrayMove[0] == "Push")         stack.push(token[j]);
+                        if (ArrayMove[0] == "Push")         stack.push(token[j]);
                         if (ArrayMove[0] == "Push(2A)")     stack.push("АЭМ_"+ countAEM);
                         if (ArrayMove[0] == "Push(GOTO)")   stack.push("GOTO");
                         if (ArrayMove[0] == "Push(IF)")     stack.push("IF");
+                        if (ArrayMove[0] == "Push(1F)")     stack.push("F_"+(++countFuntion));
 
                         if (ArrayMove[0] == "Swap(i+1_A)")  stack.swap("АЭМ_" + (++countAEM));
                         if (ArrayMove[0] == "Swap(G)")      stack.swap(token[j]);
@@ -659,6 +670,7 @@ namespace TyAP
                 if (token == "R07") return 25;  // [
                 if (token == "W10") return 26;  // GOTO
                 if (token[0] == 'G') return 27;  // Метка (G1)
+                if (token == "W00") return 28;  //Условный переход ложный
             }
             if (state == 1)
             {
