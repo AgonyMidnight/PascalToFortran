@@ -16,8 +16,3 @@ function f(a,b:integer):integer;
 begin
   f:= a+b;
 end;
-
-
-Стек
-
-Выход

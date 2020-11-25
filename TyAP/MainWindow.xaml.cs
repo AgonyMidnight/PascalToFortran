@@ -572,6 +572,7 @@ namespace TyAP
                         if (ArrayMove[0] == "State(0)")     stack.state = 0;
 
 
+
                         ArrayMove.RemoveAt(0);
 
                     }
