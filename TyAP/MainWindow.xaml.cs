@@ -24,7 +24,7 @@ namespace TyAP
     {
         Dictionary<string, string> dictionary = new Dictionary<string, string>();
         const int m1 = 19, m2 = 15;
-        const int s0m1 = 21, s0m2 = 27;
+        const int s0m1 = 22, s0m2 = 28;
         const int s1m1 = 2, s1m2 = 6;
         string [,] MyMatrix  = new string [m1,m2];
         string[,] StateNull = new string[s0m1, s0m2];
@@ -519,8 +519,9 @@ namespace TyAP
                 if (token == "O01" || token == "O02") return 16; // + -
                 if (token == "O03" || token == "O04") return 17; // * /
                 if (token == "O16") return 18;  // степень
-                if (token == "BP") return 19;  // Безусловный переход
-                if (token == "UPL") return 20;  //Условный переход ложный
+                if (token == "БП") return 19;  // Безусловный переход
+                if (token == "УПЛ") return 20;  //Условный переход ложный
+                if (token == "GOTO") return 21;  //Условный переход ложный
             }
             if (state == 1)
             {
@@ -564,13 +565,16 @@ namespace TyAP
                         if (ArrayMove[0] == "Pop(:)")       stack.pop(":"); 
                         if (ArrayMove[0] == "Pop(KP)")      stack.pop("КП");    //конец процедуры (программы)
                         if (ArrayMove[0] == "Pop(i_j_NP)")  stack.pop("НП_" + (++countBegin) + "_" + (++countBeginLevel));
+                        if (ArrayMove[0] == "Pop(BP)")      stack.pop("БП");
 
                         if (ArrayMove[0] == "Push")         stack.push(token[j]);
                         if (ArrayMove[0] == "Push(2A)")     stack.push("АЭМ_"+ countAEM);
+                        if (ArrayMove[0] == "Push(GOTO)")   stack.push("GOTO");
 
                         if (ArrayMove[0] == "Swap(i+1_A)")  stack.swap("АЭМ_" + (++countAEM));
+                        if (ArrayMove[0] == "Swap(G)")      stack.swap(token[j]);
 
-                        if (ArrayMove[0] == "getOut")       stack.getOut();
+                            if (ArrayMove[0] == "getOut")   stack.getOut();
                         if (ArrayMove[0] == "Hold")         j--;
 
                         if (ArrayMove[0] == "State(1)")     stack.state = 1;
@@ -644,6 +648,7 @@ namespace TyAP
                 if (token == "R05") return 24;  // :
                 if (token == "R07") return 25;  // [
                 if (token == "W10") return 26;  // GOTO
+                if (token[0] == 'G') return 27;  // Метка (G1)
             }
             if (state == 1)
             {
