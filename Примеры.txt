@@ -1,3 +1,20 @@
+сломанное:
+(a+b[i+20,i[5]])*c+d;
+
+y-fun(x,fun(x),y+2);
+
+if a>b
+   then
+begin
+   z:=x;
+end;
+else
+begin
+   z:=y;
+end;
+
+___________________________
+
 2.1
 (a+d)/c+b*(e+d);
 

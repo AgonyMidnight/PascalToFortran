@@ -17,9 +17,6 @@ using System.Windows.Shapes;
 
 namespace TyAP
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -102,6 +99,24 @@ namespace TyAP
             public void swap(string temp)  
             {
                 StackTokens[countStack - 1] = temp;
+            }
+
+            public void plusToLast(int last, int preLast = 0, int prePreLast = 0)
+            {
+                string[] arr = StackTokens.Last().Split('_');
+                if(last > 0)
+                {
+                    arr[arr.Length - 1] = (Int32.Parse(arr[arr.Length - 1]) + last).ToString();
+                }
+                if (preLast > 0)
+                {
+                    arr[arr.Length - 2] = (Int32.Parse(arr[arr.Length - 2]) + preLast).ToString();
+                }
+                if (prePreLast > 0)
+                {
+                    arr[arr.Length - 3] = (Int32.Parse(arr[arr.Length - 3]) + prePreLast).ToString();
+                }
+                swap(String.Join("_", arr));
             }
         }
 
@@ -546,7 +561,8 @@ namespace TyAP
             Stack stack = new Stack();
           
             string[] arrayBox = textBoxOutToken.Text.Split('\n');
-            int countAEM = 2;
+            List<int> countArray = new List<int>();
+            
             int countBegin = 0;
             int countBeginLevel = 0;
             int countUPL = 0;
@@ -587,14 +603,16 @@ namespace TyAP
                         if (ArrayMove[0] == "Pop(Mi:)")     stack.pop("М_" + countUPL+"_:");
 
                         if (ArrayMove[0] == "Push")         stack.push(token[j]);
-                        if (ArrayMove[0] == "Push(2A)")     stack.push("АЭМ_"+ countAEM);
+                        if (ArrayMove[0] == "Push(2A)")     stack.push("АЭМ_2");
                         if (ArrayMove[0] == "Push(GOTO)")   stack.push("GOTO");
                         if (ArrayMove[0] == "Push(IF)")     stack.push("IF");
                         if (ArrayMove[0] == "Push(1F)")     stack.push("F_"+(++countFuntion));
                         if (ArrayMove[0] == "Push(perem_0)")stack.push("V_" + (++countVar));//////////////////////
 
 
-                        if (ArrayMove[0] == "Swap(i+1_A)")  stack.swap("АЭМ_" + (++countAEM));
+                        if (ArrayMove[0] == "Swap(i+1_A)")
+                            stack.plusToLast(1);
+
                         if (ArrayMove[0] == "Swap(G)")      stack.swap(token[j]);
                         if (ArrayMove[0] == "Swap(Mi_IF)")  stack.swap("IF_M_" + countUPL);
                         if (ArrayMove[0] == "Swap(Mi+1_IF)") stack.swap("М_" + countUPL+1 + "_:");
@@ -611,7 +629,6 @@ namespace TyAP
                         if (ArrayMove[0] == "endF")         countFuntion = 0;
                         if (ArrayMove[0] == "endType")      countVar = 0;
                         
-
                         ArrayMove.RemoveAt(0);
 
                     }
