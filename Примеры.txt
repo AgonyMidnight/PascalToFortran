@@ -7,7 +7,7 @@ if a>b
    then
 begin
    z:=x;
-end;
+end
 else
 begin
    z:=y;
@@ -39,11 +39,20 @@ M1:
 2.7
 if a>b
  then
-begin
-   z:=x
+   z:=x;
  else
    z:=y;
-end;
+
+ИЛИ
+if a>b
+ then
+  begin
+   z:=x;
+  end
+ else
+   z:=y;
+  end;
+
 
 2.7
 var a,b,c :real;

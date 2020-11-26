@@ -352,6 +352,11 @@ namespace TyAP
         /*******************************        1 LABA                                    ************************************************/
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            textBoxOutToken.Text = "";
+            textBoxUseToken.Text = "";
+            textBoxOPZ.Text = "";
+         
+
             string[] arrayBox = textBoxInput.Text.Split('\n');
             for (int i = 0; i < arrayBox.Length; i++)
             {   
@@ -518,14 +523,14 @@ namespace TyAP
         {
             //ТАБЛИЦА ПО  ВЕРТИКАЛИ
             if (state == 0) {
-                if (token == "") return 0;   // в стеке пусто
+                if (token == "" || token == "W01") return 0;   // в стеке пусто или begin
                 if (token == "R15") return 1;   //(
                 if (token[0] == 'А' && token[1] == 'Э' && token[2] == 'М') return 2;   //Array i
                 if (token[0] == 'F') return 3;   //Function i
                 if (token == "IF") return 4;   //if
 
-                if (token.IndexOf("IF_M_") >= 0) return 5;   //IF_mi  (IF_M_1)
-                if (token.IndexOf("IF_m") >= 0) return 6;   //IF_mi+1 ?????????
+                if (token.IndexOf("IF_Mi_") >= 0) return 5;   
+                if (token.IndexOf("IF_Mi+1_") >= 0) return 6;  
                 if (token.IndexOf("Proc") >= 0) return 7;
                 if (token.IndexOf("DCL") >= 0) return 8;    //?
 
@@ -564,13 +569,13 @@ namespace TyAP
         /*******************************        2 LABA                                    ************************************************/
         private void Button_ClickLR1(object sender, RoutedEventArgs e)
         {
+            textBoxOPZ.Text = "";
             Stack stack = new Stack();
           
             string[] arrayBox = textBoxOutToken.Text.Split('\n');
             
             int countBegin = 0;
             int countBeginLevel = 0;
-            int countUPL = 0;
             
             
 
@@ -579,15 +584,16 @@ namespace TyAP
                 buff = arrayBox[i];                             //считали первую строку
                 string[] token = buff.Split(' ');               //разбили её по пробелам на массив
 
-                //int countFuntion = 0;
-               // int countVar = 0;
+                
 
                 for (int j = 0; j < token.Length; j++) {
                     token[j] = token[j].Replace("\r", "");          //Удалили в элементе все лишнее
                     if (token[j] == "" || token[j] == "\n" || token[j] == " " || token[j] == "\r") continue;    //Если там был пробел, то ничего не надо делать
 
                     string lastInStack = stack.StackTokens.Count == 0 ? "" : stack.StackTokens.Last();          //Находим, что последнее в масиве, если ничего, то пустая строка
-                 
+
+                   
+
                     string move = getFindMoveForToken(whatLastInTheStack(lastInStack, stack.state) , WhatIsToken(token[j], stack.state), stack.state); //Поучаем данные из таблицы
 
 
@@ -605,14 +611,11 @@ namespace TyAP
                         if (ArrayMove[0] == "Pop(KP)")          stack.pop("КП");    
                         if (ArrayMove[0] == "Pop(i_j_NP)")      stack.pop("НП_" + (++countBegin) + "_" + (++countBeginLevel));
                         if (ArrayMove[0] == "Pop(BP)")          stack.pop("БП");
-                        if (ArrayMove[0] == "Pop(Mi_UPL)")      stack.pop("УПЛ_М"+(++countUPL));
-                        if (ArrayMove[0] == "Pop(Mi+1_BP_Mi:)") stack.pop("М_" + (++countUPL) + "_БП_М_"+ (countUPL-1) + "_:");
-                        if (ArrayMove[0] == "Pop(Mi:)")         stack.pop("М_" + countUPL+"_:");
+                        if (ArrayMove[0] == "Pop(Mi+1:)")       stack.pop("Мi:_" + stack.getLastInt());
 
                         if (ArrayMove[0] == "Push")             stack.push(token[j]);
                         if (ArrayMove[0] == "Push(2A)")         stack.push("АЭМ_2");
                         if (ArrayMove[0] == "Push(GOTO)")       stack.push("GOTO");
-                        if (ArrayMove[0] == "Push(IF)")         stack.push("IF");
                         if (ArrayMove[0] == "Push(1F)")         stack.push("F_1");
                         if (ArrayMove[0] == "Push(perem_0)")    stack.push("V_1");
 
@@ -621,11 +624,18 @@ namespace TyAP
                         if (ArrayMove[0] == "Swap(i+1_F)")      stack.plusToLast(1);
                         if (ArrayMove[0] == "Swap(2F)")         stack.plusToLast(1);
                         if (ArrayMove[0] == "Swap(perem_i+1)")  stack.plusToLast(1);
-
                         if (ArrayMove[0] == "Swap(G)")          stack.swap(token[j]);
-                        if (ArrayMove[0] == "Swap(Mi_IF)")      stack.swap("IF_M_" + countUPL);
-                        if (ArrayMove[0] == "Swap(Mi+1_IF)")    stack.swap("М_" + countUPL+1 + "_:");
                         
+
+
+                        //if
+                        if (ArrayMove[0] == "Pop(UPL_Mi_1)")            stack.pop("UPL_Mi_1");  
+                        if (ArrayMove[0] == "Pop(Mi+1_BP_Mi:)")         stack.pop("Мi_БП_Мi:_" + (stack.getLastInt() + 1) + "_" + (stack.getLastInt())); 
+                        if (ArrayMove[0] == "Pop(IF_Mi_i => Mi:_i)")    stack.pop("Мi:_" + stack.getLastInt());
+                        if (ArrayMove[0] == "Swap(IF_Mi_1)")            stack.swap("IF_Mi_1"); 
+                        if (ArrayMove[0] == "Swap(Mi+1_IF)")            stack.plusToLast(1);
+                        if (ArrayMove[0] == "Push(IF)")                 stack.push("IF"); 
+                        //endif
 
                         if (ArrayMove[0] == "getOut")           stack.getOut();
                         if (ArrayMove[0] == "Hold")             j--;
@@ -633,7 +643,13 @@ namespace TyAP
                         if (ArrayMove[0] == "State(1)")         stack.state = 1;
                         if (ArrayMove[0] == "State(0)")         stack.state = 0;
 
-                        
+                        if (ArrayMove[0] == "KP()" && lastInStack == "W01")
+                        {
+                            stack.pop("КП");
+                            stack.getOut();
+                        }  
+
+
                         ArrayMove.RemoveAt(0);
 
                     }
