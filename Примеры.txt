@@ -13,6 +13,11 @@ begin
    z:=y;
 end;
 
+procedure a;
+begin
+   write('a');
+end;
+
 ___________________________
 
 2.1

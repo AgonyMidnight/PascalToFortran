@@ -576,8 +576,8 @@ namespace TyAP
             
             int countBegin = 0;
             int countBeginLevel = 0;
-            
-            
+
+            int countIf = 1;
 
             for (int i = 0; i < arrayBox.Length; i++)
             {
@@ -629,12 +629,12 @@ namespace TyAP
 
 
                         //if
-                        if (ArrayMove[0] == "Pop(UPL_Mi_1)")            stack.pop("UPL_Mi_1");  
+                        if (ArrayMove[0] == "Pop(UPL_Mi_1)")            stack.pop("UPL_Mi_"+ countIf);  
                         if (ArrayMove[0] == "Pop(Mi+1_BP_Mi:)")         stack.pop("Мi_БП_Мi:_" + (stack.getLastInt() + 1) + "_" + (stack.getLastInt())); 
                         if (ArrayMove[0] == "Pop(IF_Mi_i => Mi:_i)")    stack.pop("Мi:_" + stack.getLastInt());
-                        if (ArrayMove[0] == "Swap(IF_Mi_1)")            stack.swap("IF_Mi_1"); 
-                        if (ArrayMove[0] == "Swap(Mi+1_IF)")            stack.plusToLast(1);
-                        if (ArrayMove[0] == "Push(IF)")                 stack.push("IF"); 
+                        if (ArrayMove[0] == "Swap(IF_Mi_1)")            stack.swap("IF_Mi_" + countIf++); 
+                        if (ArrayMove[0] == "Swap(Mi+1_IF)")            { stack.plusToLast(1);  countIf++; }
+                        if (ArrayMove[0] == "Push(IF)")                 stack.push("IF");
                         //endif
 
                         if (ArrayMove[0] == "getOut")           stack.getOut();
@@ -643,7 +643,7 @@ namespace TyAP
                         if (ArrayMove[0] == "State(1)")         stack.state = 1;
                         if (ArrayMove[0] == "State(0)")         stack.state = 0;
 
-                        if (ArrayMove[0] == "KP()" && lastInStack == "W01")
+                        if (ArrayMove[0] == "KP()" && lastInStack == "W01" /*begin - НП*/)
                         {
                             stack.pop("КП");
                             stack.getOut();
@@ -658,6 +658,7 @@ namespace TyAP
             }
             foreach (string str in stack.OutString)
             {
+                //НАПИСАТЬ ОБРАБОТЧИК ДЛЯ i
                 textBoxOPZ.Text += str+'\n';
             }
             
