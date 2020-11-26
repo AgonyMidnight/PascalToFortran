@@ -14,9 +14,41 @@ begin
 end;
 
 procedure a;
+	var i:integer;
 begin
    write('a');
 end;
+
+procedure MaxNumber(a,b: integer; var max: integer);
+begin
+   if a>b then max:=a else max:=b;
+end;
+
+
+program Str1;
+var Words: string;
+
+begin
+  Words := 'microsoft';
+  Words[1] := UpCase (Words[1]);
+  WriteLn(Words);
+end.
+
+
+program Stepen_chisla;
+var
+  Z, A : real; M : integer;
+function Step (N: integer; X:real): real;
+var
+  I: integer; Y: real;
+    begin
+      I:=1; Y:=1;
+      end; 
+begin
+   Write('xxxxxxxxxxxx'); Readln(Z,M);
+   F:=Step(M,Z);
+   Writeln(Z, ' xxxxxxxxxx ', M, '=',F);
+end.
 
 ___________________________
 

@@ -21,7 +21,7 @@ namespace TyAP
     {
         Dictionary<string, string> dictionary = new Dictionary<string, string>();
         const int m1 = 19, m2 = 15;
-        const int s0m1 = 24, s0m2 = 30;
+        const int s0m1 = 24, s0m2 = 31;
         const int s1m1 = 2, s1m2 = 6;
         string [,] MyMatrix  = new string [m1,m2];
         string[,] StateNull = new string[s0m1, s0m2];
@@ -578,6 +578,7 @@ namespace TyAP
             int countBeginLevel = 0;
 
             int countIf = 1;
+            int countCrocedure = 0;
 
             for (int i = 0; i < arrayBox.Length; i++)
             {
@@ -625,10 +626,14 @@ namespace TyAP
                         if (ArrayMove[0] == "Swap(2F)")         stack.plusToLast(1);
                         if (ArrayMove[0] == "Swap(perem_i+1)")  stack.plusToLast(1);
                         if (ArrayMove[0] == "Swap(G)")          stack.swap(token[j]);
-                        
 
 
-                        //if
+                        //proc
+                        if (ArrayMove[0] == "Push(PROC_1_1)") stack.push("PROC_" + (countCrocedure++) + "_" + 1);
+                            //endproc
+
+
+                            //if
                         if (ArrayMove[0] == "Pop(UPL_Mi_1)")            stack.pop("UPL_Mi_"+ countIf);  
                         if (ArrayMove[0] == "Pop(Mi+1_BP_Mi:)")         stack.pop("Мi_БП_Мi:_" + (stack.getLastInt() + 1) + "_" + (stack.getLastInt())); 
                         if (ArrayMove[0] == "Pop(IF_Mi_i => Mi:_i)")    stack.pop("Мi:_" + stack.getLastInt());
@@ -643,11 +648,12 @@ namespace TyAP
                         if (ArrayMove[0] == "State(1)")         stack.state = 1;
                         if (ArrayMove[0] == "State(0)")         stack.state = 0;
 
-                        if (ArrayMove[0] == "KP()" && lastInStack == "W01" /*begin - НП*/)
+                        if (ArrayMove[0] == "KP()")
                         {
                             stack.pop("КП");
-                            stack.getOut();
+                            if (lastInStack == "W01" /*begin - НП*/)  stack.getOut();
                         }  
+
 
 
                         ArrayMove.RemoveAt(0);
@@ -718,6 +724,7 @@ namespace TyAP
                 if (token[0] == 'G') return 27;  // Метка (G1)
                 if (token == "W00") return 28;  //program
                 if (token == "W06") return 29;  //var
+                if (token == "W08") return 30;  //procedure
             }
             if (state == 1)
             {
