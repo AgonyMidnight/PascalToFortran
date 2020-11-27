@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TyAP"
         mc:Ignorable="d"
-        Title="PascalToFortran" Height="448" Width="1204">
+        Title="PascalToFortran" Height="448" Width="1493.5">
     <Grid Margin="0,0,2,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -40,6 +40,14 @@
                 <ImageBrush ImageSource="Resources/button1.png" TileMode="Tile"/>
             </Button.Background>
         </Button>
+        <Button x:Name="buttonLR3" Content="" HorizontalAlignment="Left" Margin="1118,182,0,0" VerticalAlignment="Top" Width="63" Height="54" Click="Button_ClickLR3" Visibility="Visible">
+            <Button.Background>
+                <ImageBrush ImageSource="Resources/button1.png" TileMode="Tile"/>
+            </Button.Background>
+        </Button>
+        <TextBox x:Name="textBoxFortran" HorizontalAlignment="Left" Height="310" Margin="1232,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" VerticalScrollBarVisibility="Visible" AcceptsReturn="True" TextChanged="TextBox_TextChanged" FontSize="16" />
+        <Label Content="ОПЗ" HorizontalAlignment="Left" Margin="852,14,0,0" VerticalAlignment="Top"/>
+        <Label Content="Fortran:" HorizontalAlignment="Left" Margin="1232,14,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

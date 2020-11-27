@@ -671,6 +671,8 @@ namespace TyAP
 
         }
 
+        
+
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
@@ -775,6 +777,12 @@ namespace TyAP
             MessageBox.Show("Разделитель не найден!");
             return 80;
             
+        }
+
+
+        private void Button_ClickLR3(object sender, RoutedEventArgs e)
+        {
+            //3 ЛАБА!!
         }
 
     }
