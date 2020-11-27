@@ -566,7 +566,7 @@ namespace TyAP
             }
             if (state == 1)
             {
-                if (token != "" && token[0] == 'F') return 0;   //Function i 
+                if ((token != "" && token[0] == 'F') || token == "R15") return 0;   //Function i 
                 else return 1;
             }
             return 777;
@@ -673,16 +673,13 @@ namespace TyAP
                     textBoxOPZ.Text += "\n======Стек: \n";
                     foreach (string str in stack.StackTokens)
                     {
-                        //НАПИСАТЬ ОБРАБОТЧИК ДЛЯ i
                         textBoxOPZ.Text += str+'\n';
                     }
                     textBoxOPZ.Text += "\nВых: \n";
                     foreach (string str in stack.OutString)
                     {
-                        //НАПИСАТЬ ОБРАБОТЧИК ДЛЯ i
                         textBoxOPZ.Text += str+'\n';
-                    }
-                    */
+                    }*/
                 }
             }
             foreach (string str in stack.OutString)
@@ -804,10 +801,84 @@ namespace TyAP
         }
 
 
-        private void Button_ClickLR3(object sender, RoutedEventArgs e)
+        class Interpreter
         {
-            //3 ЛАБА!!
+            //List<string> Out = new List<string>();
+            public List<string> stack = new List<string>();
+
+            public Interpreter()
+            {
+                
+            }
+
+            public void del()
+            {
+                stack.RemoveAt(stack.Count - 1);
+            }
+
+            public void plus (string x)
+            {
+                stack[stack.Count - 2] += x + stack[stack.Count - 1];
+                del();
+            }
         }
 
+        private void Button_ClickLR3(object sender, RoutedEventArgs e)
+        {
+            textBoxFortran.Text = "";
+            string[] arrayBox = textBoxOPZ.Text.Split('\n');
+
+            Interpreter stack = new Interpreter();
+            Interpreter lastInFunction = new Interpreter();
+
+            foreach (string token in arrayBox)
+            {
+                if (token == "") textBoxFortran.Text += '\n';
+                else if (token[0] == 'I' || token[0] == 'S' || token[0] == 'N')
+                {
+                    stack.stack.Add(token);
+                }
+                else if (token == "W00")
+                {
+                    stack.stack[stack.stack.Count - 1] = "Program " + swap(stack.stack.Last());
+                    textBoxFortran.Text += stack.stack.Last() + '\n';
+
+                }
+                else if (token.IndexOf("НП_") >= 0) { }
+                else if (token == "O01")
+                {
+                    stack.plus(" " + token + " ");
+                }
+                else if (token[0] == 'F')
+                {
+                    int F = Convert.ToInt32((token.Split('_'))[1]);
+                    while(F > 2)
+                    {
+                        stack.plus(", ");
+                        F--;
+                    }
+                    stack.plus("(");
+                    textBoxFortran.Text += swap(stack.stack.Last()) + ") \n";
+                    stack.del();
+                }
+                else if (token == "КП")
+                {
+                    textBoxFortran.Text += "End ";
+                    if (stack.stack.Last().IndexOf("Program ") >= 0)
+                    {
+                        textBoxFortran.Text += stack.stack.Last();
+                    }
+                }
+
+                //textBoxFortran.Text += token;
+            }
+                // textBoxFortran.Text = textBoxFortran.Text + buff+ " ";
+
+        }
+
+        private string swap(string x)
+        {
+            return x;
+        }
     }
 }

@@ -1,0 +1,22 @@
+program Hello;
+begin
+  srk(largest_power + 1, z)
+end.
+
+I21
+W00
+НП_1_1
+
+I22	srk
+I23	largest_power
+N8	1
+O01	+
+I24	z
+F_3
+
+КП
+
+
+Program Hello
+   srk(largest_power + 1, z)
+End Program Hello
