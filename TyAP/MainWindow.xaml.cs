@@ -811,14 +811,20 @@ namespace TyAP
                 
             }
 
-            public void del()
+            public void del()   //удаляет последний элемент в стеке
             {
                 stack.RemoveAt(stack.Count - 1);
             }
 
-            public void plus (string x)
-            {
+            public void plus (string x)     //соединяет 2 последних элемента в один
+            { 
                 stack[stack.Count - 2] += x + stack[stack.Count - 1];
+                del();
+            }
+
+            public void plusOpp (string x)  //соединяет 2 элемента в 1, и добавляет скобочки
+            {
+                stack[stack.Count - 2] = "( " + stack[stack.Count - 2] + x + stack[stack.Count - 1] + " )";
                 del();
             }
         }
@@ -845,32 +851,78 @@ namespace TyAP
 
                 }
                 else if (token.IndexOf("НП_") >= 0) { }
-                else if (token == "O01")
+                else if (token[0] == 'O' || token == "W11" || token == "W12" || token == "W13" )       //операции + - * / := ...
                 {
-                    stack.plus(" " + token + " ");
+                    if (token == "O00") stack.plusOpp(" O08 ");  //:= заменить на =
+                    else
+                    stack.plusOpp(" " + token + " ");
                 }
                 else if (token[0] == 'F')
                 {
                     int F = Convert.ToInt32((token.Split('_'))[1]);
-                    while(F > 2)
+                    if(F==1)
                     {
-                        stack.plus(", ");
-                        F--;
+                        stack.stack[stack.stack.Count - 1] += "()";
+                    } else
+                    {
+                        while (F > 2)
+                        {
+                            stack.plus(", ");
+                            F--;
+                        }
+                        stack.plus(" ( ");
+                        stack.stack[stack.stack.Count - 1] += " )";
                     }
-                    stack.plus("(");
-                    textBoxFortran.Text += swap(stack.stack.Last()) + ") \n";
-                    stack.del();
                 }
                 else if (token == "КП")
                 {
+                    for (int i = stack.stack.Count - 1,  j=0 ; i>=0; j = i--)
+                    {
+                        if (stack.stack[i].IndexOf("Program ") >= 0)
+                        {
+                            if (i == stack.stack.Count-1) break;
+                            textBoxFortran.Text += stack.stack[j] + '\n';
+                            stack.stack.RemoveAt(j);
+                            i = stack.stack.Count;
+                        }
+                    }
+                    
                     textBoxFortran.Text += "End ";
                     if (stack.stack.Last().IndexOf("Program ") >= 0)
                     {
                         textBoxFortran.Text += stack.stack.Last();
+                        stack.del();
                     }
                 }
 
+                /*
+                 I24
+                I25
+                O06
+                UPL_Mi_1
+                НП
+                I23
+                I26
+                O00
+                КП
+                Мi_БП_Мi:_2_1
+                I23
+                I27
+                O00
+                Мi:_2
+                КП
+                */
                 //textBoxFortran.Text += token;
+            }
+
+            if (stack.stack.Count >0 )
+            {
+                textBoxFortran.Text += "\n==========\n";
+                foreach (string std in stack.stack)
+                {
+                    textBoxFortran.Text += std + '\n';
+                }
+                
             }
                 // textBoxFortran.Text = textBoxFortran.Text + buff+ " ";
 
