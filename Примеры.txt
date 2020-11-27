@@ -50,6 +50,22 @@ begin
    Writeln(Z, ' xxxxxxxxxx ', M, '=',F);
 end.
 
+
+
+стек: Degree a b integer V_2 integer FUNC_1_1
+
+выход:
+
+function Degree(a,b:integer):integer;
+var r:integer;
+begin
+     r:=1;
+     if b>0 then begin
+        r:=r*a;
+        b:=b-1;
+     end;
+     Degree:=r;
+end;
 ___________________________
 
 2.1

@@ -21,7 +21,7 @@ namespace TyAP
     {
         Dictionary<string, string> dictionary = new Dictionary<string, string>();
         const int m1 = 19, m2 = 15;
-        const int s0m1 = 24, s0m2 = 31;
+        const int s0m1 = 25, s0m2 = 32;
         const int s1m1 = 2, s1m2 = 6;
         string [,] MyMatrix  = new string [m1,m2];
         string[,] StateNull = new string[s0m1, s0m2];
@@ -523,6 +523,9 @@ namespace TyAP
         {
             //ТАБЛИЦА ПО  ВЕРТИКАЛИ
             if (state == 0) {
+                if (token.IndexOf("FUNC_") >= 0) return 24;   //function
+
+
                 if (token == "" || token == "W01") return 0;   // в стеке пусто или begin
                 if (token == "R15") return 1;   //(
                 if (token[0] == 'А' && token[1] == 'Э' && token[2] == 'М') return 2;   //Array i
@@ -558,6 +561,8 @@ namespace TyAP
                 if (token == "GOTO") return 21;  
                 if (token == "W00") return 22;  //program
                 if (token[0] == 'V') return 23;  //var
+                //24 вверху (из за Fi)
+
             }
             if (state == 1)
             {
@@ -579,6 +584,7 @@ namespace TyAP
 
             int countIf = 1;
             int countCrocedure = 0;
+            int countFunction = 0;
 
             for (int i = 0; i < arrayBox.Length; i++)
             {
@@ -630,8 +636,9 @@ namespace TyAP
 
                         //proc
                         if (ArrayMove[0] == "Push(PROC_1_1)") stack.push("PROC_" + (countCrocedure++) + "_" + 1);
-                            //endproc
+                        //endproc
 
+                        if (ArrayMove[0] == "Push(FUNC_i_i)") stack.push("FUNC_" + (+countFunction) + "_1");
 
                             //if
                         if (ArrayMove[0] == "Pop(UPL_Mi_1)")            stack.pop("UPL_Mi_"+ countIf);  
@@ -659,7 +666,23 @@ namespace TyAP
                         ArrayMove.RemoveAt(0);
 
                     }
-                    //textBoxOPZ.Text += "\n======\n";
+                    // textBoxOPZ.Text += "\n======\n";
+
+                    /*
+                     //СУПЕР ОТЛАДЧИК СТЕКА!!!
+                    textBoxOPZ.Text += "\n======Стек: \n";
+                    foreach (string str in stack.StackTokens)
+                    {
+                        //НАПИСАТЬ ОБРАБОТЧИК ДЛЯ i
+                        textBoxOPZ.Text += str+'\n';
+                    }
+                    textBoxOPZ.Text += "\nВых: \n";
+                    foreach (string str in stack.OutString)
+                    {
+                        //НАПИСАТЬ ОБРАБОТЧИК ДЛЯ i
+                        textBoxOPZ.Text += str+'\n';
+                    }
+                    */
                 }
             }
             foreach (string str in stack.OutString)
@@ -686,7 +709,7 @@ namespace TyAP
             {
                 if (token[0] == 'N') return 0;   //N - число (N01)
                 if (token[0] == 'S') return 1;   //S - Строка (S01)
-                if (token[0] == 'I') return 2;   //I - Переменная (I01)
+                if (token[0] == 'I' || token[0] == 'F') return 2;   //I - Переменная (I01)
 
                 if (token == "R15") return 3;   // (
                 if (token == "R16") return 4;   // )
@@ -727,6 +750,7 @@ namespace TyAP
                 if (token == "W00") return 28;  //program
                 if (token == "W06") return 29;  //var
                 if (token == "W08") return 30;  //procedure
+                if (token == "W09") return 31;  //function
             }
             if (state == 1)
             {
