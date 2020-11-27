@@ -847,7 +847,7 @@ namespace TyAP
                 else if (token == "W00")
                 {
                     stack.stack[stack.stack.Count - 1] = "Program " + swap(stack.stack.Last());
-                    textBoxFortran.Text += stack.stack.Last() + '\n';
+                    textBoxFortran.Text += swap(stack.stack.Last()) + '\n';
 
                 }
                 else if (token.IndexOf("НП_") >= 0) { }
@@ -881,7 +881,7 @@ namespace TyAP
                         if (stack.stack[i].IndexOf("Program ") >= 0)
                         {
                             if (i == stack.stack.Count-1) break;
-                            textBoxFortran.Text += stack.stack[j] + '\n';
+                            textBoxFortran.Text += swap(stack.stack[j]) + '\n';
                             stack.stack.RemoveAt(j);
                             i = stack.stack.Count;
                         }
@@ -890,7 +890,7 @@ namespace TyAP
                     textBoxFortran.Text += "End ";
                     if (stack.stack.Last().IndexOf("Program ") >= 0)
                     {
-                        textBoxFortran.Text += stack.stack.Last();
+                        textBoxFortran.Text += swap(stack.stack.Last());
                         stack.del();
                     }
                 }
@@ -930,7 +930,21 @@ namespace TyAP
 
         private string swap(string x)
         {
-            return x;
+            string[] arr = x.Split(' ');
+            for (int i = 0; i < arr.Length; i++)
+            {
+                for(int j=0; j<1/*размер словаря*/; j++)
+                {
+                    if (/*найдено в словаре*/ true)
+                    {
+                        arr[i] = arr[i]; //тут должно быть присвоение из словаря
+                    }
+                }
+                
+            }
+
+            return String.Join(" ", arr);
+        
         }
     }
 }
