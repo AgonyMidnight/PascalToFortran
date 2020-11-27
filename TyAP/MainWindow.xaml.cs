@@ -618,7 +618,7 @@ namespace TyAP
                         if (ArrayMove[0] == "Push(2A)")         stack.push("АЭМ_2");
                         if (ArrayMove[0] == "Push(GOTO)")       stack.push("GOTO");
                         if (ArrayMove[0] == "Push(1F)")         stack.push("F_1");
-                        if (ArrayMove[0] == "Push(perem_0)")    stack.push("V_1");
+                        if (ArrayMove[0] == "Push(perem_0)")    stack.push("V_0");
 
 
                         if (ArrayMove[0] == "Swap(i+1_A)")      stack.plusToLast(1);

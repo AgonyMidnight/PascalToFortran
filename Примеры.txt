@@ -93,3 +93,73 @@ if a>b
 
 2.7
 var a,b,c :real;
+
+
+____________________
+
+
+
+
+
+
+function Step (N: integer; X:real): real;
+
+__________________
+
+var
+  I: integer; Y: real;
+begin
+  I:=1; Y:=1;
+end;
+
+
+Стек: perem_0
+
+Вых: I
+
+
+
+
+
+
+
+
+
+Стек: perem_0
+
+Вых: Step FUNC_1_1
+
+
+
+
+
+
+
+
+
+
+
+
+perem_0
+var
+  I: integer; Y: real;
+begin
+
+
+
+perem_0
+var
+  I: integer;
+begin
+
+
+perem_3
+var
+  x,y,z: integer; Y: real;
+begin
+
+
+
+
+
+

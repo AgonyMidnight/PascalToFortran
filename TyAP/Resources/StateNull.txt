@@ -21,4 +21,4 @@ Pop(BP Õ),getOut	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err
 Pop(X),getOut,Pop(BP)	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err
 Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Swap(G),Pop,getOut,Pop(BP)	Err	Err	Err
 Err	Err	Pop(X)	Err	Err	Err	Err	Pop,getOut	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err
-Err	Err	Pop(X)	Err	Err	Err	Swap(perem_i+1)	Pop,getOut	Err	Err	Err	Err	Err	Err	Pop(X),getOut	Err	Err	Err	Err	Err	Err	Err	Err	Err	Pop	Err	Err	Err	Err	Err	Err
+Err	Err	Pop(X)	Err	Err	Err	Swap(perem_i+1)	Pop,getOut,Push(perem_0)	Err	Err	Err	getOut,Hold	Err	Err	Pop(X)	Err	Err	Err	Err	Err	Err	Err	Err	Err	Swap(perem_i+1)	Err	Err	Err	Err	Err	Err
