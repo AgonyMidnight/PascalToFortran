@@ -862,7 +862,7 @@ namespace TyAP
                     int F = Convert.ToInt32((token.Split('_'))[1]);
                     if(F==1)
                     {
-                        stack.stack[stack.stack.Count - 1] += "()";
+                        stack.stack[stack.stack.Count - 1] += " () ";
                     } else
                     {
                         while (F > 2)
@@ -933,15 +933,32 @@ namespace TyAP
             string[] arr = x.Split(' ');
             for (int i = 0; i < arr.Length; i++)
             {
+                bool f = false;
                 foreach (KeyValuePair<string, string> keyValue in dictionary.ToArray())
                 {
                     if (keyValue.Value == arr[i])
                     {
                         arr[i] = keyValue.Key;
+                        f = true;
                         break;
                     }
                 }
-               
+                if (f) continue;
+               if(arr[i][0] == 'N')
+                {
+                    int count = 0;
+                    if (arr[i].Length == 2)
+                    {
+                        string strNum = arr[1];
+                        count = Convert.ToInt32(strNum);
+                    }
+                    else if (arr[i].Length == 3)
+                    {
+                        string strNum = arr[1] + arr[2];
+                        count = Convert.ToInt32(strNum);
+                    }
+                    arr[i] = arrayNumbers[count];
+                }
 
             }
 
