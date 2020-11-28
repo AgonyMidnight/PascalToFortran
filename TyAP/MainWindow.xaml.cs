@@ -933,14 +933,16 @@ namespace TyAP
             string[] arr = x.Split(' ');
             for (int i = 0; i < arr.Length; i++)
             {
-                for(int j=0; j<1/*размер словаря*/; j++)
+                foreach (KeyValuePair<string, string> keyValue in dictionary.ToArray())
                 {
-                    if (/*найдено в словаре*/ true)
+                    if (keyValue.Value == arr[i])
                     {
-                        arr[i] = arr[i]; //тут должно быть присвоение из словаря
+                        arr[i] = keyValue.Key;
+                        break;
                     }
                 }
-                
+               
+
             }
 
             return String.Join(" ", arr);
