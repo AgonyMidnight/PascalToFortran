@@ -66,7 +66,7 @@ namespace TyAP
             public int countNum = 1;    //счетчик числен
             public int countFunc = 1;   //счетчик функций
 
-
+            private bool enter = false;
             public Stack(){
 
             }
@@ -74,7 +74,16 @@ namespace TyAP
             //Указанный элемент (Вершина стека) в выхоодную строку
             public void pop(string temp = null) 
             {
-                OutString.Add(temp ?? StackTokens[countStack - 1]);
+                if(temp == "enter!!!")
+                {
+                    if (enter == false) OutString.Add("\n");
+                    enter = true;
+                } else
+                {
+                    OutString.Add(temp ?? StackTokens[countStack - 1]);
+                    enter = false;
+                }
+                
             }
       
             public void setState(int s)
@@ -434,6 +443,7 @@ namespace TyAP
                             if (status != 14) j--;
                             if (status == 0) { parsBuff = ""; }
                             if (status == 12 || status == 13 || status == 7) j++;
+                            
                         }
                         else if (secondParsMove == "P3")
                         {
@@ -682,11 +692,12 @@ namespace TyAP
                         textBoxOPZ.Text += str+'\n';
                     }*/
                 }
+                stack.pop("enter!!!");
             }
             foreach (string str in stack.OutString)
             {
                 //НАПИСАТЬ ОБРАБОТЧИК ДЛЯ i
-                textBoxOPZ.Text += str+'\n';
+                textBoxOPZ.Text += str + " ";
             }
             
 
@@ -833,84 +844,113 @@ namespace TyAP
         private void Button_ClickLR3(object sender, RoutedEventArgs e)
         {
             textBoxFortran.Text = "";
-            string[] arrayBox = textBoxOPZ.Text.Split('\n');
+            string[] arrayBoxs = textBoxOPZ.Text.Split('\n');
 
             Interpreter stack = new Interpreter();
             Interpreter lastInFunction = new Interpreter();
 
-            foreach (string token in arrayBox)
+            foreach (string tokens in arrayBoxs)
             {
-                if (token == "") textBoxFortran.Text += '\n';
-                else if (token[0] == 'I' || token[0] == 'S' || token[0] == 'N')
+                string[] arrayBox = tokens.Split(' ');
+                foreach (string token in arrayBox)
                 {
-                    stack.stack.Add(token);
-                }
-                else if (token == "W00")
-                {
-                    stack.stack[stack.stack.Count - 1] = "Program " + swap(stack.stack.Last());
-                    textBoxFortran.Text += swap(stack.stack.Last()) + '\n';
-                }
-                else if (token.IndexOf("НП_") >= 0) { }
-                else if (token[0] == 'O' || token == "W11" || token == "W12" || token == "W13" )       //операции + - * / := ...
-                {
-                    if (token == "O00") stack.plusOpp(" O08 ");  //:= заменить на =
-                    else
-                    stack.plusOpp(" " + token + " ");
-                }
-                else if (token[0] == 'F')
-                {
-                    int F = Convert.ToInt32((token.Split('_'))[1]);
-                    if(F==1)
+                    if (token == "") { }
+                    else if (token[0] == 'I' || token[0] == 'S' || token[0] == 'N')
                     {
-                        stack.stack[stack.stack.Count - 1] += " () ";
-                    } else
+                        stack.stack.Add(token);
+                    }
+                    else if (token == "W00")
                     {
-                        while (F > 2)
+                        stack.stack[stack.stack.Count - 1] = "Program↔" + swap(stack.stack.Last());
+                        textBoxFortran.Text += swap(stack.stack.Last()) + '\n';
+                    }
+                    else if (token.IndexOf("НП_") >= 0) { }
+                    else if (token[0] == 'O' || token == "W11" || token == "W12" || token == "W13")       //операции + - * / := ...
+                    {
+                        if (token == "O00") stack.plusOpp(" O08 ");  //:= заменить на =
+                        else
+                            stack.plusOpp(" " + token + " ");
+                    }
+                    else if (token[0] == 'F')
+                    {
+                        int F = Convert.ToInt32((token.Split('_'))[1]);
+                        if (F == 1)
+                        {
+                            stack.stack[stack.stack.Count - 1] += " () ";
+                        }
+                        else
+                        {
+                            while (F > 2)
+                            {
+                                stack.plus(", ");
+                                F--;
+                            }
+                            stack.plus(" ( ");
+                            stack.stack[stack.stack.Count - 1] += " )";
+                        }
+                    }
+                    else if (token.IndexOf("АЭМ_") >= 0)
+                    {
+                        int A = Convert.ToInt32((token.Split('_'))[1]);
+                        while (A > 2)
                         {
                             stack.plus(", ");
-                            F--;
+                            A--;
                         }
-                        stack.plus(" ( ");
-                        stack.stack[stack.stack.Count - 1] += " )";
+                        stack.plus(" [ ");
+                        stack.stack[stack.stack.Count - 1] += " ]";
                     }
-                }
-                else if (token == "КП")
-                {
-                    for (int i = stack.stack.Count - 1,  j=0 ; i>=0; j = i--)
+                    else if (token.IndexOf("UPL_Mi_)") >= 0)
                     {
-                        if (stack.stack[i].IndexOf("Program ") >= 0)
-                        {
-                            if (i == stack.stack.Count-1) break;
-                            textBoxFortran.Text += swap(stack.stack[j]) + '\n';
-                            stack.stack.RemoveAt(j);
-                            i = stack.stack.Count;
-                        }
-                    }
-                    
-                    textBoxFortran.Text += "End ";
-                    if (stack.stack.Last().IndexOf("Program ") >= 0)
-                    {
-                        textBoxFortran.Text += swap(stack.stack.Last());
+                        textBoxFortran.Text += "if " + stack.stack.Last() + " then";
                         stack.del();
+                        stack.stack.Add("МыВИфе");
+                    }
+                    else if (token == "КП")
+                    {
+                        for (int i = stack.stack.Count - 1, j = 0; i >= 0; j = i--)
+                        {
+                            if (stack.stack[i].IndexOf("Program") >= 0)
+                            {
+                                if (i == stack.stack.Count - 1) break;
+                                textBoxFortran.Text += swap(stack.stack[j]) + '\n';
+                                stack.stack.RemoveAt(j);
+                                i = stack.stack.Count;
+                            }
+                        }
+
+                        textBoxFortran.Text += "End↔";
+                        if (stack.stack.Last().IndexOf("Program") >= 0)
+                        {
+                            textBoxFortran.Text += swap(stack.stack.Last());
+                            stack.del();
+                        }
                     }
                 }
 
+                   
+
                 /*
-                 I24
-                I25
-                O06
-                UPL_Mi_1
-                НП
-                I23
-                I26
-                O00
-                КП
-                Мi_БП_Мi:_2_1
-                I23
-                I27
-                O00
-                Мi:_2
-                КП
+                    I25
+                    W00
+                    НП_1_1
+                    I20
+                    I21
+                    O06
+                    UPL_Mi_1
+                    НП
+                    I22
+                    I23
+                    O00
+                    КП
+                    Мi_БП_Мi:_2_1
+                    I22
+                    I24
+                    O00
+                    Мi:_2
+                    КП
+                    КП
+
                 */
                 //textBoxFortran.Text += token;
             }
@@ -924,8 +964,13 @@ namespace TyAP
                 }
                 
             }
+            
                 // textBoxFortran.Text = textBoxFortran.Text + buff+ " ";
 
+            string[] outic = textBoxFortran.Text.Split(' ');
+            textBoxFortran.Text = String.Join("", outic);
+
+            textBoxFortran.Text = textBoxFortran.Text.Replace('↔', ' ');
         }
 
         private string swap(string x)

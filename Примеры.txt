@@ -1,6 +1,14 @@
 сломанное:
 (a+b[i+20,i[5]])*c+d;
 
+program one;
+begin
+(a+b[i+20,i[5]])*c+d;
+end.
+
+a[4,7]-5
+
+
 y-fun(x,fun(x),y+2);
 
 if a>b
