@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions;
 
 namespace TyAP
 {
@@ -848,7 +849,6 @@ namespace TyAP
                 {
                     stack.stack[stack.stack.Count - 1] = "Program " + swap(stack.stack.Last());
                     textBoxFortran.Text += swap(stack.stack.Last()) + '\n';
-
                 }
                 else if (token.IndexOf("НП_") >= 0) { }
                 else if (token[0] == 'O' || token == "W11" || token == "W12" || token == "W13" )       //операции + - * / := ...
@@ -920,7 +920,7 @@ namespace TyAP
                 textBoxFortran.Text += "\n==========\n";
                 foreach (string std in stack.stack)
                 {
-                    textBoxFortran.Text += std + '\n';
+                    textBoxFortran.Text += swap(std) + '\n';
                 }
                 
             }
@@ -933,6 +933,13 @@ namespace TyAP
             string[] arr = x.Split(' ');
             for (int i = 0; i < arr.Length; i++)
             {
+                if (arr[i] == "") continue;
+                if (arr[i][0] == 'N')
+                {
+                    string stdNum = Regex.Match(arr[i], @"\d+").Value;
+                    int num = Convert.ToInt32(stdNum);
+                    arr[i] = arrayNumbers[num];
+                }
                 bool f = false;
                 foreach (KeyValuePair<string, string> keyValue in dictionary.ToArray())
                 {
@@ -944,7 +951,7 @@ namespace TyAP
                     }
                 }
                 if (f) continue;
-               if(arr[i][0] == 'N')
+               /*if(arr[i][0] == 'N')
                 {
                     int count = 0;
                     if (arr[i].Length == 2)
@@ -958,7 +965,7 @@ namespace TyAP
                         count = Convert.ToInt32(strNum);
                     }
                     arr[i] = arrayNumbers[count];
-                }
+                }*/
 
             }
 
