@@ -3,7 +3,7 @@ Pop(X)	Pop(X)	State(1),Pop(X)	Push	getOut	Err	Err	Err	Err	Err	Err	Err	Err	Err	Er
 Pop(X)	Pop(X)	State(1),Pop(X)	Push	Err	Pop,getOut	Swap(i+1_A)	Err	Err	Err	Err	Err	Err	Err	Err	Err	Push	Push	Push	Push	Push	Push	Push	Err	Err	Err	Err	Err	Err	Err	Err	Err
 Pop(X)	Pop(X)	State(1),Pop(X)	Push(1F),State(1)	Pop,getOut	Err	Swap(i+1_F)	Err	Err	Err	Err	Err	Err	Err	Err	Err	Push	Push	Push	Push	Push	Push	Push	Err	Err	Err	Err	Err	Err	Err	Err	Err
 Pop(X)	Pop(X)	State(1),Pop(X)	Push	Err	Err	Err	Err	Err	Pop(UPL_Mi_1),Swap(IF_Mi_1)	Err	Err	Err	Err	Err	Err	Push	Push	Push	Push	Push	Push	Push	Err	Err	Err	Err	Err	Err	Err	Err	Err
-Pop(X)	Pop(X)	State(1),Pop(X)	Push	Err	Err	Err	Pop(IF_Mi_i => Mi:_i),getOut	Push(IF)	Err	Pop(Mi+1_BP_Mi:),Swap(Mi+1_IF)	Pop(NP),Push	Err	Err	Err	Push	Push	Push	Push	Push	Push	Push	Push	Err	Err	Err	Err	Err	Err	Err	Err	Err
+Pop(X)	Pop(X)	State(1),Pop(X)	Push	Err	Err	Err	N	Push(IF)	Err	Pop(Mi+1_BP_Mi:),Swap(Mi+1_IF)	Pop(NP),Push	Err	Pop(IF_Mi_i => Mi:_i),getOut	Err	Push	Push	Push	Push	Push	Push	Push	Push	Err	Err	Err	Err	Err	Err	Err	Err	Err
 Pop(X)	Pop(X)	State(1),Pop(X)	Push	Err	Err	Err	Pop(Mi+1:),getOut	Push(IF)	Err	Pop(Mi+1:),getOut,Hold	Err	Err	Err	Err	Push	Push	Push	Push	Push	Push	Push	Push	Err	Err	Err	Err	Err	Err	Err	Err	Err
 Err	Err	State(1),Pop(X)	Push	Err	Err	Err	Pop,getOut	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err
 Err	Err	State(1),Pop(X)	N	N	Err	Swap(i_j_k+1_D)	Pop(йн),getOut	Err	Err	Err	Err	Err	Err	Push	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err	Err

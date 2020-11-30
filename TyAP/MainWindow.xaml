@@ -16,7 +16,7 @@
                 <GradientStop Color="#FF2CBDE8" Offset="0.017"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <TextBox x:Name="textBoxInput" HorizontalAlignment="Left" Height="310" Margin="19,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="213" VerticalScrollBarVisibility="Visible" AcceptsReturn="True" Text="(5) -5;" TextChanged="TextBoxInput_TextChanged" FontSize="16"  />
+        <TextBox x:Name="textBoxInput" HorizontalAlignment="Left" Height="310" Margin="19,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="213" VerticalScrollBarVisibility="Visible" AcceptsReturn="True" Text="program Stepen_chisla;&#xD;&#xA;var z,a,b : integer;&#xD;&#xA;var s:string;&#xD;&#xA;begin&#xD;&#xA; if a&gt;b&#xD;&#xA; then&#xD;&#xA;   begin&#xD;&#xA;      if s[0] = 5 then&#xD;&#xA;         z:=x;&#xD;&#xA;         else&#xD;&#xA;         begin&#xD;&#xA;            a:=getMax(12,44,56+6);&#xD;&#xA;            s[0+1, 4] :=5;&#xD;&#xA;         end&#xD;&#xA;      end;&#xD;&#xA;   end&#xD;&#xA; else&#xD;&#xA;   z:=a*(b+6);&#xD;&#xA;  end;&#xD;&#xA;end." TextChanged="TextBoxInput_TextChanged" FontSize="16"  />
         <Label x:Name="label1" Content="Введите необходимый код на Pascal " HorizontalAlignment="Left" Margin="19,10,0,0" VerticalAlignment="Top" Height="26" Width="213"/>
         <Button Content="" HorizontalAlignment="Left" Margin="248,182,0,0" VerticalAlignment="Top" Width="63" Height="54" Click="Button_Click">
             <Button.Background>
@@ -40,12 +40,12 @@
                 <ImageBrush ImageSource="Resources/button1.png" TileMode="Tile"/>
             </Button.Background>
         </Button>
-        <Button x:Name="buttonLR3" Content="" HorizontalAlignment="Left" Margin="1118,182,0,0" VerticalAlignment="Top" Width="63" Height="54" Click="Button_ClickLR3" Visibility="Visible">
+        <Button x:Name="buttonLR3" Content="" HorizontalAlignment="Left" Margin="1084,182,0,0" VerticalAlignment="Top" Width="63" Height="54" Click="Button_ClickLR3" Visibility="Visible">
             <Button.Background>
                 <ImageBrush ImageSource="Resources/button1.png" TileMode="Tile"/>
             </Button.Background>
         </Button>
-        <TextBox x:Name="textBoxFortran" HorizontalAlignment="Left" Height="310" Margin="1232,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" VerticalScrollBarVisibility="Visible" AcceptsReturn="True" TextChanged="TextBox_TextChanged" FontSize="16" />
+        <TextBox x:Name="textBoxFortran" HorizontalAlignment="Left" Height="310" Margin="1152,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="308" VerticalScrollBarVisibility="Visible" AcceptsReturn="True" TextChanged="TextBox_TextChanged" FontSize="16" />
         <Label Content="ОПЗ" HorizontalAlignment="Left" Margin="852,14,0,0" VerticalAlignment="Top"/>
         <Label Content="Fortran:" HorizontalAlignment="Left" Margin="1232,14,0,0" VerticalAlignment="Top"/>
 

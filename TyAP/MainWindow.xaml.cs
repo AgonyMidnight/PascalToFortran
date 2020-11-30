@@ -21,7 +21,7 @@ namespace TyAP
     public partial class MainWindow : Window
     {
         Dictionary<string, string> dictionary = new Dictionary<string, string>();
-        const int m1 = 19, m2 = 15;
+        const int m1 = 20, m2 = 16;
         const int s0m1 = 25, s0m2 = 32;
         const int s1m1 = 2, s1m2 = 6;
         string [,] MyMatrix  = new string [m1,m2];
@@ -466,7 +466,7 @@ namespace TyAP
 
                             firstParsMove = ""; secondParsMove = "";
                             if (status == 16 || status == 12 || status == 13) j++; //от сглаза двух палочек
-                            if (status == 11) j--;
+                            if (status == 11 ) j--;
                             --j; continue;
                         }
                         else if (secondParsMove == "P4")
@@ -545,7 +545,7 @@ namespace TyAP
 
                 if (token.IndexOf("IF_Mi_") >= 0) return 5;   
                 if (token.IndexOf("IF_Mi+1_") >= 0) return 6;  
-                if (token.IndexOf("Proc") >= 0) return 7;
+                if (token.IndexOf("PROC") >= 0) return 7;   //ИСПРАВИТЬ!!!
                 if (token.IndexOf("DCL") >= 0) return 8;    //?
 
                 if (token == "W14" || token == "W15" || token == "W16" || token == "W17" || token == "W18")
@@ -640,7 +640,8 @@ namespace TyAP
 
                         if (ArrayMove[0] == "Swap(i+1_A)")      stack.plusToLast(1);
                         if (ArrayMove[0] == "Swap(i+1_F)")      stack.plusToLast(1);
-                        if (ArrayMove[0] == "Swap(2F)")         stack.plusToLast(1);
+                        if (ArrayMove[0] == "Swap(2F)")
+                            stack.plusToLast(1);
                         if (ArrayMove[0] == "Swap(perem_i+1)")  stack.plusToLast(1);
                         if (ArrayMove[0] == "Swap(G)")          stack.swap(token[j]);
 
@@ -652,15 +653,24 @@ namespace TyAP
                         if (ArrayMove[0] == "Push(FUNC_i_i)") stack.push("FUNC_" + (+countFunction) + "_1");
 
                             //if
-                        if (ArrayMove[0] == "Pop(UPL_Mi_1)")            stack.pop("UPL_Mi_"+ countIf);  
+                        if (ArrayMove[0] == "Pop(UPL_Mi_1)")
+                            stack.pop("UPL_Mi_"+ countIf);  
                         if (ArrayMove[0] == "Pop(Mi+1_BP_Mi:)")         stack.pop("Мi_БП_Мi:_" + (stack.getLastInt() + 1) + "_" + (stack.getLastInt())); 
-                        if (ArrayMove[0] == "Pop(IF_Mi_i => Mi:_i)")    stack.pop("Мi:_" + stack.getLastInt());
+                        if (ArrayMove[0] == "Pop(IF_Mi_i => Mi:_i)")
+                            stack.pop("Мi:_" + stack.getLastInt());
                         if (ArrayMove[0] == "Swap(IF_Mi_1)")            stack.swap("IF_Mi_" + countIf++); 
                         if (ArrayMove[0] == "Swap(Mi+1_IF)")            { stack.plusToLast(1);  countIf++; }
                         if (ArrayMove[0] == "Push(IF)")                 stack.push("IF");
                         //endif
 
-                        if (ArrayMove[0] == "getOut")           stack.getOut();
+                        if (ArrayMove[0] == "getOut")
+                        {
+                            stack.getOut();
+                            if (stack.StackTokens.Count != 0 && stack.StackTokens.Last().IndexOf("IF_Mi_") > 0)
+                            {
+                                j++;
+                            }
+                        }
                         if (ArrayMove[0] == "Hold")             j--;
 
                         if (ArrayMove[0] == "State(1)")         stack.state = 1;
@@ -693,14 +703,13 @@ namespace TyAP
                     }*/
                 }
                 stack.pop("enter!!!");
+                
             }
             foreach (string str in stack.OutString)
             {
                 //НАПИСАТЬ ОБРАБОТЧИК ДЛЯ i
                 textBoxOPZ.Text += str + " ";
             }
-            
-
         }
 
         
@@ -784,12 +793,13 @@ namespace TyAP
             //if (parsbuff == 'e') { return 7; }
             if (parsbuff == '\'') { return 8; }
             if (parsbuff == '/') { return 9; }
-            if (parsbuff == ' ' || parsbuff == ',' || parsbuff == ';' || parsbuff == '('
-                || parsbuff == ')' || parsbuff == '[' || parsbuff == ']') { return 10; }
+            if  (parsbuff == ',' || parsbuff == ';' || parsbuff == '('
+                 || parsbuff == '[') { return 10; }
             if (parsbuff == '\n') { return 11; }
             if (parsbuff == '\0') { return 12; }
             if (parsbuff == ':') { return 13; }
             if (parsbuff == '+' || parsbuff == '-') { return 14; }
+            if (parsbuff == ')' || parsbuff == ']' || parsbuff == ' ') return 15;
 
             for (int i = 0; i < 53; i++)
             {
@@ -815,29 +825,62 @@ namespace TyAP
 
         class Interpreter
         {
-            //List<string> Out = new List<string>();
             public List<string> stack = new List<string>();
 
-            public Interpreter()
-            {
-                
-            }
-
-            public void del()   //удаляет последний элемент в стеке
+            /// <summary>Удаляет последний элемент стэка</summary>
+            public void Del()   
             {
                 stack.RemoveAt(stack.Count - 1);
             }
 
-            public void plus (string x)     //соединяет 2 последних элемента в один
-            { 
-                stack[stack.Count - 2] += x + stack[stack.Count - 1];
-                del();
+            /// <summary>Cоединяет предпоследплеследний элемент с последним, ставя между ними символ</summary>
+            /// <param name="x">Знак, который будет между соединяемыми элементами</param>
+            /// <param name="scob">Нужно ли обернуть элементы с скобочки</param>
+            public void Plus (string x, bool scob = false)
+            {                
+                stack[stack.Count - 2] += " "  + x + " " + stack[stack.Count - 1] + " ";
+                Del();
+                if (scob)
+                {
+                    stack[stack.Count - 1] = " ( " + stack[stack.Count - 1] + " ) ";
+                }
             }
 
-            public void plusOpp (string x)  //соединяет 2 элемента в 1, и добавляет скобочки
+            /// <summary>Добавляет к последнему элементу переданные части</summary>
+            /// <param name="before">Что добавить в начало</param>
+            /// <param name="after">Что добавить в конец</param>
+            public void AddTo(string before = "", string after = "")
             {
-                stack[stack.Count - 2] = "( " + stack[stack.Count - 2] + x + stack[stack.Count - 1] + " )";
-                del();
+                stack[stack.Count - 1] = before + stack[stack.Count - 1] + after;
+            }
+
+            /// <summary>Собирает несколько элементов в один, занося их в скобки</summary>
+            /// <param name="X">While X>2</param>
+            /// <param name="before">Что добавить в начало</param>
+            /// <param name="after">Что добавить в конец</param>
+            public void CombineSeveral(int X, char before, char after)
+            {
+                while (X > 2)
+                {
+                    Plus(", ");
+                    X--;
+                }
+                Plus(" " + before + " ");
+                AddTo("", " " + after + " ");
+            }
+
+            public string PutOut (bool needAll = false)
+            {
+                string was = "";
+                for (int i = stack.Count - 1; i > 0; i--)
+                {   //програм, иф, элсе, эндиф
+                    if (stack[i].IndexOf("Program") < 0 && stack[i].IndexOf("UPL_Mi_") < 0 && stack[i].IndexOf("Мi_БП_М") < 0 && stack[i].IndexOf("Мi:") != 0 || needAll) 
+                    {
+                        was = " " + stack.Last() + " \n" + was;
+                        Del();
+                    }
+                }
+                return was;
             }
         }
 
@@ -849,131 +892,154 @@ namespace TyAP
             Interpreter stack = new Interpreter();
             Interpreter lastInFunction = new Interpreter();
 
+            string type = null;
+            int levelIf = 0;
+            bool lastIf = false;
+            string was = "";
             foreach (string tokens in arrayBoxs)
             {
                 string[] arrayBox = tokens.Split(' ');
                 foreach (string token in arrayBox)
                 {
-                    if (token == "") { }
-                    else if (token[0] == 'I' || token[0] == 'S' || token[0] == 'N')
+                    if (token == "" || token.IndexOf("НП") >= 0) { continue; }    
+
+                    else if (token == "W14" || token == "W15" || token == "W16" || token == "W17" || token == "W18" )
+                    {   ///типы (записываем тип, чтобы потом добавить его)
+                        type = token;
+                    }
+                    else if (token[0] == 'I' || token[0] == 'N')
+                    {   ///если это число, строка или переменная - сразу в стек
+                        if (token[0] == 'N' && (false || false))
+                        {
+                            //ТУТ ДОЛЖНО БЫТЬ УСЛОВИЕ: ЕСЛИ ЧИСЛО НАЧИНАЕТСЯ НА - ИЛИ +, ТО 
+                            //ЕГО НАДО БУДЕТ ПО ДРУГОМУ СКЛАДЫВАТЬ. СООТВЕТСТВЕННО, ТУТ НАДО ОПРЕДЕЛИТЬ 
+                            //КАКОЕ ЭТО ИМЕННО ЧИСЛО!!!
+                            
+                            stack.AddTo("", token);
+                        } else
+                        {
+                            stack.stack.Add(token);
+                        }  
+                    }
+                    else if (token[0] == 'S')
                     {
                         stack.stack.Add(token);
+                        stack.AddTo(" \" ", " \" ");
                     }
                     else if (token == "W00")
-                    {
-                        stack.stack[stack.stack.Count - 1] = "Program↔" + swap(stack.stack.Last());
+                    {   ///если это program то в стек, в ожидание, пока не закончится программа
+                        stack.stack[0] = "Program↔" + swap(stack.stack.Last());
                         textBoxFortran.Text += swap(stack.stack.Last()) + '\n';
                     }
-                    else if (token.IndexOf("НП_") >= 0) { }
-                    else if (token[0] == 'O' || token == "W11" || token == "W12" || token == "W13")       //операции + - * / := ...
-                    {
-                        if (token == "O00") stack.plusOpp(" O08 ");  //:= заменить на =
-                        else
-                            stack.plusOpp(" " + token + " ");
+                    else if (token == "O00" || token == "O06" || token == "O07" || token == "O08")
+                    {   /// :=
+                        stack.Plus(token, false);
+                    }
+                    else if (token[0] == 'O' || token == "W11" || token == "W12" || token == "W13")
+                    {   ///операции + - * / ...
+                        stack.Plus(token, true);
                     }
                     else if (token[0] == 'F')
-                    {
+                    {   ///функции
                         int F = Convert.ToInt32((token.Split('_'))[1]);
-                        if (F == 1)
-                        {
-                            stack.stack[stack.stack.Count - 1] += " () ";
-                        }
-                        else
-                        {
-                            while (F > 2)
-                            {
-                                stack.plus(", ");
-                                F--;
-                            }
-                            stack.plus(" ( ");
-                            stack.stack[stack.stack.Count - 1] += " )";
-                        }
+                        if (F == 1) stack.AddTo("", " () ");
+                        else        stack.CombineSeveral(F, '(', ')');
                     }
                     else if (token.IndexOf("АЭМ_") >= 0)
-                    {
+                    {   ///массивы
                         int A = Convert.ToInt32((token.Split('_'))[1]);
-                        while (A > 2)
+                        stack.CombineSeveral(A, '[', ']');
+                    }
+                    else if (token[0] == 'V')
+                    {   //переменные
+                        int V = Convert.ToInt32((token.Split('_'))[1]);
+                        while (V > 1)
                         {
-                            stack.plus(", ");
-                            A--;
+                            stack.Plus(" , ");
+                            V--;
                         }
-                        stack.plus(" [ ");
-                        stack.stack[stack.stack.Count - 1] += " ]";
+                        textBoxFortran.Text += swap(type) + "↔::↔" + swap(stack.stack.Last()) + '\n';
+                        stack.Del();
                     }
-                    else if (token.IndexOf("UPL_Mi_)") >= 0)
+                    else if (token.IndexOf("UPL_Mi_") >= 0)
+                    {   ///if
+                        levelIf++;
+
+                        string temp = token;
+                        string inIf = stack.stack.Last();
+                        stack.Del();
+
+                        was = stack.PutOut();
+                        textBoxFortran.Text += swap(was);
+
+                        textBoxFortran.Text += "if↔(↔ " + swap(inIf) + " ) ↔then\n";
+                        stack.stack.Add(token);
+                    }
+                    else if (token.IndexOf("Мi_БП_Мi") >= 0)
                     {
-                        textBoxFortran.Text += "if " + stack.stack.Last() + " then";
-                        stack.del();
-                        stack.stack.Add("МыВИфе");
+                        was = stack.PutOut();
+                        textBoxFortran.Text += swap(was);
+
+                        stack.Del();
+
+                        textBoxFortran.Text += "else\n ";
+
+                        stack.stack.Add(token);
                     }
+                    else if (token.IndexOf("Мi:_") == 0)
+                    {
+                        was = stack.PutOut();
+                        textBoxFortran.Text += swap(was);
+
+                        stack.Del();
+
+                        textBoxFortran.Text += " end↔if\n ";
+                        levelIf--;
+                        if (levelIf == 0) lastIf = true;
+                    }
+
                     else if (token == "КП")
                     {
-                        for (int i = stack.stack.Count - 1, j = 0; i >= 0; j = i--)
+                        if (lastIf)
                         {
-                            if (stack.stack[i].IndexOf("Program") >= 0)
-                            {
-                                if (i == stack.stack.Count - 1) break;
-                                textBoxFortran.Text += swap(stack.stack[j]) + '\n';
-                                stack.stack.RemoveAt(j);
-                                i = stack.stack.Count;
-                            }
+                            lastIf = false;
+                            continue;
                         }
-
-                        textBoxFortran.Text += "End↔";
-                        if (stack.stack.Last().IndexOf("Program") >= 0)
+                        if (stack.stack.Count != 0 && stack.stack.Last().IndexOf("Program") >= 0)
                         {
-                            textBoxFortran.Text += swap(stack.stack.Last());
-                            stack.del();
+                            textBoxFortran.Text += "End↔" + swap(stack.stack.Last());
+                            stack.Del();
                         }
                     }
                 }
-
-                   
-
-                /*
-                    I25
-                    W00
-                    НП_1_1
-                    I20
-                    I21
-                    O06
-                    UPL_Mi_1
-                    НП
-                    I22
-                    I23
-                    O00
-                    КП
-                    Мi_БП_Мi:_2_1
-                    I22
-                    I24
-                    O00
-                    Мi:_2
-                    КП
-                    КП
-
-                */
-                //textBoxFortran.Text += token;
             }
 
-            if (stack.stack.Count >0 )
+            was = stack.PutOut();
+            textBoxFortran.Text += swap(was);
+
+            if (stack.stack.Count != 0)
             {
-                textBoxFortran.Text += "\n==========\n";
-                foreach (string std in stack.stack)
+                if (stack.stack.Last().IndexOf("Program") >= 0)
                 {
-                    textBoxFortran.Text += swap(std) + '\n';
+                    textBoxFortran.Text += "End↔" + swap(stack.stack.Last());
+                    stack.Del();
                 }
-                
+                else
+                {
+                    textBoxFortran.Text += swap(stack.stack.Last());
+                }
             }
-            
-                // textBoxFortran.Text = textBoxFortran.Text + buff+ " ";
 
+            
+            //убираем пробелы
             string[] outic = textBoxFortran.Text.Split(' ');
             textBoxFortran.Text = String.Join("", outic);
-
+            //выставляем нормальные пробелы и равно
             textBoxFortran.Text = textBoxFortran.Text.Replace('↔', ' ');
+            textBoxFortran.Text = textBoxFortran.Text.Replace(":=", "=");
         }
 
-        private string swap(string x)
+        public string swap(string x)
         {
             string[] arr = x.Split(' ');
             for (int i = 0; i < arr.Length; i++)
@@ -981,37 +1047,18 @@ namespace TyAP
                 if (arr[i] == "") continue;
                 if (arr[i][0] == 'N')
                 {
-                    string stdNum = Regex.Match(arr[i], @"\d+").Value;
+                    string stdNum = Regex.Match(arr[i], @"\d+").Value;  //вытаскиваем число
                     int num = Convert.ToInt32(stdNum);
                     arr[i] = arrayNumbers[num];
                 }
-                bool f = false;
                 foreach (KeyValuePair<string, string> keyValue in dictionary.ToArray())
                 {
                     if (keyValue.Value == arr[i])
                     {
                         arr[i] = keyValue.Key;
-                        f = true;
                         break;
                     }
                 }
-                if (f) continue;
-               /*if(arr[i][0] == 'N')
-                {
-                    int count = 0;
-                    if (arr[i].Length == 2)
-                    {
-                        string strNum = arr[1];
-                        count = Convert.ToInt32(strNum);
-                    }
-                    else if (arr[i].Length == 3)
-                    {
-                        string strNum = arr[1] + arr[2];
-                        count = Convert.ToInt32(strNum);
-                    }
-                    arr[i] = arrayNumbers[count];
-                }*/
-
             }
 
             return String.Join(" ", arr);
