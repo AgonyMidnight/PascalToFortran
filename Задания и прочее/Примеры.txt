@@ -25,15 +25,19 @@ ______________________________________________________
 
 (a+b[i+20,i[5]])*c+d;
 _______________________________________________________
-!!НЕ РАБОТАЕТ!! - косяк в 3
+Функции
+fun1();
+y-fun(x,fun(x),y+2);
+aaa(bbb(ccc,ddd),ddd()*f);
+_______________________________________________________
+
 program Str1;
 var Words: string;
 begin
-x:= 4+ 5;
+x:= 4+5;
 end.
 
-!!НЕ РАБОТАЕТ!! - косяк в 2
-y-fun(x,fun(x),y+2);
+не работает есть поставить пробелы!!!!!!!!!!!!
 _______________________________________________________
 !!НЕ РАБОТАЕТ!!
 procedure a;
@@ -48,18 +52,16 @@ begin
    if a>b then max:=a else max:=b;
 end;
 _______________________________________________________
-!!НЕ РАБОТАЕТ!!
-
+!!НЕ РАБОТАЕТ!! - в 2 не работает массив в функции
 program Str1;
 var Words: string;
-
 begin
   Words := 'microsoft';
   Words[1] := UpCase (Words[1]);
   WriteLn(Words);
 end.
-
-
+_______________________________________________________
+!!НЕ РАБОТАЕТ!! - функции не руализованны
 program Stepen_chisla;
 var
   Z, A : real; M : integer;
@@ -74,12 +76,6 @@ begin
    F:=Step(M,Z);
    Writeln(Z, ' xxxxxxxxxx ', M, '=',F);
 end.
-
-
-
-стек: Degree a b integer V_2 integer FUNC_1_1
-
-выход:
 
 function Degree(a,b:integer):integer;
 var r:integer;
@@ -97,7 +93,8 @@ ___________________________
 (a+d)/c+b*(e+d);
 
 2.2
-a+b< -5 and 2-c=1 +q;
+a+b< -5 and 2-c=1 +q;		//не работатет!!!!!!!!!
+a+b< -5 and 2-c=1+q;		//работатет
 
 2.3
 (a+b[i+20,j])*c+d;
@@ -109,10 +106,15 @@ y-fun(x,z,y+2);
 x:= f(x);
 
 2.6
+program Stepen_chisla;
+begin
 R1:=A+B;
 GOTO M1;
 R2:=C*D-A;
 M1:
+v:=3;
+end.
+
 
 2.7
 if a>b
@@ -120,6 +122,7 @@ if a>b
    z:=x;
  else
    z:=y;
+end;
 
 ИЛИ
 if a>b
@@ -134,24 +137,3 @@ if a>b
 
 2.7
 var a,b,c :real;
-
-
-____________________
-
-
-
-
-
-
-function Step (N: integer; X:real): real;
-
-__________________
-
-var
-  I: integer; Y: real;
-begin
-  I:=1; Y:=1;
-end;
-
-
-

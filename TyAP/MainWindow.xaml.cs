@@ -916,17 +916,7 @@ namespace TyAP
                     }
                     else if (token[0] == 'I' || token[0] == 'N')
                     {   ///если это число, строка или переменная - сразу в стек
-                        if (token[0] == 'N' && (false || false))
-                        {
-                            //ТУТ ДОЛЖНО БЫТЬ УСЛОВИЕ: ЕСЛИ ЧИСЛО НАЧИНАЕТСЯ НА - ИЛИ +, ТО 
-                            //ЕГО НАДО БУДЕТ ПО ДРУГОМУ СКЛАДЫВАТЬ. СООТВЕТСТВЕННО, ТУТ НАДО ОПРЕДЕЛИТЬ 
-                            //КАКОЕ ЭТО ИМЕННО ЧИСЛО!!!
-                            
-                            stack.AddTo("", token);
-                        } else
-                        {
-                            stack.stack.Add(token);
-                        }  
+                        stack.stack.Add(token);
                     }
                     else if (token[0] == 'S')
                     {
@@ -942,11 +932,12 @@ namespace TyAP
                     {   /// :=
                         string std = token;
                         if (token == "O08") std = "O08  O08"; 
-                        stack.Plus(std, false);
+                        stack.Plus(" ↔ " + std + " ↔ ", false);
                     }
                     else if (token[0] == 'O' || token == "W11" || token == "W12" || token == "W13")
                     {   ///операции + - * / ...
-                        stack.Plus(token, true);
+                        if (token[0] == 'W') stack.Plus(" ↔ " + token + " ↔ ", true);   //and,or,not
+                        else stack.Plus(token, true);
                     }
                     else if (token[0] == 'F')
                     {   ///функции
@@ -974,7 +965,6 @@ namespace TyAP
                     {   ///if
                         levelIf++;
 
-                        string temp = token;
                         string inIf = stack.stack.Last();
                         stack.Del();
 
@@ -1035,7 +1025,7 @@ namespace TyAP
             }
 
             bool needAll = false;
-            if (stack.stack[0].IndexOf("Program") < 0) needAll = true;
+            if (stack.stack.Count != 0 && stack.stack[0].IndexOf("Program") < 0) needAll = true;
             was = stack.PutOut(needAll);
 
             textBoxFortran.Text += swap(was);
