@@ -874,11 +874,16 @@ namespace TyAP
                 string was = "";
                 for (int i = stack.Count - 1; i > 0; i--)
                 {   //програм, иф, элсе, эндиф
-                    if (stack[i].IndexOf("Program") < 0 && stack[i].IndexOf("UPL_Mi_") < 0 && stack[i].IndexOf("Мi_БП_М") < 0 && stack[i].IndexOf("Мi:") != 0 || needAll) 
+                    if (stack[i].IndexOf("Program") < 0 && stack[i].IndexOf("UPL_Mi_") < 0 && stack[i].IndexOf("Мi_БП_М") < 0 && stack[i].IndexOf("Мi:") != 0) 
                     {
                         was = " " + stack.Last() + " \n" + was;
                         Del();
                     }
+                }
+                if (needAll)
+                {
+                    was = " " + stack.Last() + " \n" + was;
+                    Del();
                 }
                 return was;
             }
@@ -896,6 +901,8 @@ namespace TyAP
             int levelIf = 0;
             bool lastIf = false;
             string was = "";
+            int GoTo = 0;
+
             foreach (string tokens in arrayBoxs)
             {
                 string[] arrayBox = tokens.Split(' ');
@@ -933,7 +940,9 @@ namespace TyAP
                     }
                     else if (token == "O00" || token == "O06" || token == "O07" || token == "O08")
                     {   /// :=
-                        stack.Plus(token, false);
+                        string std = token;
+                        if (token == "O08") std = "O08  O08"; 
+                        stack.Plus(std, false);
                     }
                     else if (token[0] == 'O' || token == "W11" || token == "W12" || token == "W13")
                     {   ///операции + - * / ...
@@ -997,7 +1006,18 @@ namespace TyAP
                         levelIf--;
                         if (levelIf == 0) lastIf = true;
                     }
-
+                    else if (token[0] == 'G')
+                    {
+                        GoTo = Convert.ToInt32(Regex.Match(token, @"\d+").Value) + 1;
+                    }
+                    else if (token == "БП")
+                    {
+                        if (GoTo > 0) stack.stack.Add("go↔to↔" + GoTo);
+                    }
+                    else if (token == "R05")
+                    {
+                        if (GoTo > 0) stack.stack.Add(GoTo + "↔continue");
+                    }
                     else if (token == "КП")
                     {
                         if (lastIf)
@@ -1014,7 +1034,10 @@ namespace TyAP
                 }
             }
 
-            was = stack.PutOut();
+            bool needAll = false;
+            if (stack.stack[0].IndexOf("Program") < 0) needAll = true;
+            was = stack.PutOut(needAll);
+
             textBoxFortran.Text += swap(was);
 
             if (stack.stack.Count != 0)

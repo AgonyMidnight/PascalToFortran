@@ -1,22 +1,157 @@
-program Hello;
+IF
+
+program Stepen_chisla;
+var z,a,b : integer;
+var s:string;
 begin
-  srk(largest_power + 1, z)
+ if a>b
+ then
+   begin
+      if s[0] = 5 then
+         z:=x;
+         else
+         begin
+            a:=getMax(12,44,56+6);
+            s[0+1, 4] :=5;
+         end
+      end;
+   end
+ else
+   z:=a*(b+6);
+  end;
+end.
+______________________________________________________
+Массив в массиве
+
+(a+b[i+20,i[5]])*c+d;
+_______________________________________________________
+!!НЕ РАБОТАЕТ!! - косяк в 3
+program Str1;
+var Words: string;
+begin
+x:= 4+ 5;
 end.
 
-I21
-W00
-НП_1_1
+!!НЕ РАБОТАЕТ!! - косяк в 2
+y-fun(x,fun(x),y+2);
+_______________________________________________________
+!!НЕ РАБОТАЕТ!!
+procedure a;
+	var i:integer;
+begin
+   write('a');
+end;
+_______________________________________________________
+!!НЕ РАБОТАЕТ!!
+procedure MaxNumber(a,b: integer; var max: integer);
+begin
+   if a>b then max:=a else max:=b;
+end;
+_______________________________________________________
+!!НЕ РАБОТАЕТ!!
 
-I22	srk
-I23	largest_power
-N8	1
-O01	+
-I24	z
-F_3
+program Str1;
+var Words: string;
 
-КП
+begin
+  Words := 'microsoft';
+  Words[1] := UpCase (Words[1]);
+  WriteLn(Words);
+end.
 
 
-Program Hello
-   srk(largest_power + 1, z)
-End Program Hello
+program Stepen_chisla;
+var
+  Z, A : real; M : integer;
+function Step (N: integer; X:real): real;
+var
+  I: integer; Y: real;
+    begin
+      I:=1; Y:=1;
+      end; 
+begin
+   Write('xxxxxxxxxxxx'); Readln(Z,M);
+   F:=Step(M,Z);
+   Writeln(Z, ' xxxxxxxxxx ', M, '=',F);
+end.
+
+
+
+стек: Degree a b integer V_2 integer FUNC_1_1
+
+выход:
+
+function Degree(a,b:integer):integer;
+var r:integer;
+begin
+     r:=1;
+     if b>0 then begin
+        r:=r*a;
+        b:=b-1;
+     end;
+     Degree:=r;
+end;
+___________________________
+
+2.1
+(a+d)/c+b*(e+d);
+
+2.2
+a+b< -5 and 2-c=1 +q;
+
+2.3
+(a+b[i+20,j])*c+d;
+
+2.4
+y-fun(x,z,y+2);
+
+2.5
+x:= f(x);
+
+2.6
+R1:=A+B;
+GOTO M1;
+R2:=C*D-A;
+M1:
+
+2.7
+if a>b
+ then
+   z:=x;
+ else
+   z:=y;
+
+ИЛИ
+if a>b
+ then
+  begin
+   z:=x;
+  end
+ else
+   z:=y;
+  end;
+
+
+2.7
+var a,b,c :real;
+
+
+____________________
+
+
+
+
+
+
+function Step (N: integer; X:real): real;
+
+__________________
+
+var
+  I: integer; Y: real;
+begin
+  I:=1; Y:=1;
+end;
+
+
+
